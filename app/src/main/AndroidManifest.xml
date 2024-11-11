@@ -12,9 +12,11 @@
         android:theme="@style/Theme.ChoresMap"
         tools:targetApi="31">
 
+        <!--Google Maps API KEy-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDok9QgrTQGCJX0EyLuC3IKrhLuNQpvnKc" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
