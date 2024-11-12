@@ -3,8 +3,12 @@ package com.bogdan.choresmap.model
 data class Chore(
     private val id: Int,
     private val name: String,
-    private val isCompleted: Boolean = false
+    private var isCompleted: Boolean = false
 ) {
+    fun completeChore() {
+        isCompleted = true
+    }
+
     val getId: Int
         get() = id
 
