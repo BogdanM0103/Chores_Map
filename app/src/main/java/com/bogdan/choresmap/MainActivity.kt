@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.bogdan.choresmap.model.Chore
 import com.bogdan.choresmap.ui.theme.ChoresMapTheme
 
 class MainActivity : ComponentActivity() {
@@ -60,11 +60,11 @@ fun Chore(name: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ChoreList(chores: List<String>) {
+fun ChoreList(chores: List<Chore>) {
     LazyColumn() {
         items(chores.size) { index ->
             Chore(
-                name = chores[index],
+                name = chores[index].getName,
                 modifier = Modifier
                     .padding(
                         horizontal = 8.dp,
@@ -76,15 +76,28 @@ fun ChoreList(chores: List<String>) {
 }
 
 @Composable
-fun ChoresScreen() {
-    val chores = listOf("Buy groceries", "Clean the house", "Walk the dog")
+fun ChoresListScreen() {
+    val chores = listOf(
+        Chore(
+            id = 1,
+            name = "Chore 1"
+        ),
+        Chore(
+            id = 2,
+            name = "Chore 2"
+        ),
+        Chore(
+            id = 3,
+            name = "Chore 3"
+        )
+    )
     ChoreList(chores = chores)
 }
 
 @Preview
 @Composable
-fun PreviewChoresScreen() {
-    ChoresScreen()
+fun PreviewChoresListScreen() {
+    ChoresListScreen()
 }
 
 @Composable

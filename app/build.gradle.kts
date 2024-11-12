@@ -61,4 +61,7 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
     implementation(libs.ui) // Jetpack Compose UI dependency
+
+    // Navigation Compose dependency
+    implementation("androidx.navigation:navigation-compose:2.8.3")
 }
