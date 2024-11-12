@@ -5,11 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -61,22 +64,24 @@ fun Chore(name: String, modifier: Modifier = Modifier) {
 
 @Composable
 fun ChoreList(chores: List<Chore>) {
-    LazyColumn() {
-        items(chores.size) { index ->
-            Chore(
-                name = chores[index].getName,
-                modifier = Modifier
-                    .padding(
-                        horizontal = 8.dp,
-                        vertical = 2.dp
-                    )
+    Column() {
+        LazyColumn() {
+            items(chores.size) { index ->
+                Chore(
+                    name = chores[index].getName,
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 8.dp,
+                            vertical = 2.dp
+                        )
                 )
+            }
         }
     }
 }
 
 @Composable
-fun ChoresListScreen() {
+fun ChoresListTest() {
     val chores = listOf(
         Chore(
             id = 1,
@@ -91,13 +96,37 @@ fun ChoresListScreen() {
             name = "Chore 3"
         )
     )
-    ChoreList(chores = chores)
+    Column(
+        modifier = Modifier
+    ) {
+        ChoreList(chores = chores)
+        Spacer(modifier = Modifier.height(50.dp))
+        AddChoreScreen(onClick = {})
+    }
 }
 
 @Preview
 @Composable
-fun PreviewChoresListScreen() {
-    ChoresListScreen()
+fun ChoresListTestPreview() {
+    ChoresListTest()
+}
+
+@Composable
+fun AddChoreScreen(onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp)
+    ) {
+        Text(text = "Add Chore")
+    }
+}
+
+@Preview
+@Composable
+fun AddChoreScreenPreview() {
+    AddChoreScreen(onClick = {})
 }
 
 @Composable
@@ -108,6 +137,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
+@Preview
 @Composable
 fun GreetingPreview() {
     ChoresMapTheme {
