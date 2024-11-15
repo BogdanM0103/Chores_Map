@@ -7,8 +7,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -110,6 +113,12 @@ fun AddChoreButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
         onClick = onClick,
         modifier = modifier
     ) {
+        Icon(
+            imageVector = Icons.Filled.Add,
+            contentDescription = "Add Chore",
+            modifier = Modifier
+                .padding(end = 4.dp)
+        )
         Text(
             text = "Add Chore",
             fontSize = 25.sp
