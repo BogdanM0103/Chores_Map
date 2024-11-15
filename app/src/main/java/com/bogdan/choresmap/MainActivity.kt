@@ -4,13 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Scaffold
@@ -20,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.bogdan.choresmap.model.Chore
 import com.bogdan.choresmap.ui.theme.ChoresMapTheme
 
@@ -30,8 +27,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             ChoresMapTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+//                    Greeting(
+//                        name = "Android",
+//                        modifier = Modifier.padding(innerPadding)
+//                    )
+                    ChoresListTest(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -45,86 +45,92 @@ fun Chore(name: String, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(50.dp)
+            .height(60.dp)
     ) {
         Box(
             contentAlignment = Alignment.Center,
-            modifier = modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
             Text(
                 text = name,
-                modifier = Modifier
-                    .padding(16.dp),
+                fontSize = 25.sp,
+                modifier = Modifier.padding(16.dp)
             )
         }
     }
 }
 
 @Composable
-fun ChoreList(chores: List<Chore>) {
-    Column() {
-        LazyColumn() {
-            items(chores.size) { index ->
-                Chore(
-                    name = chores[index].name,
-                    modifier = Modifier
-                        .padding(
-                            horizontal = 8.dp,
-                            vertical = 2.dp
-                        )
-                )
-            }
+fun ChoreList(chores: List<Chore>, modifier: Modifier = Modifier) {
+    LazyColumn(
+        modifier = modifier.fillMaxWidth()
+    ) {
+        items(chores) { chore ->
+            Chore(
+                name = chore.name,
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+            )
         }
     }
 }
 
 @Composable
-fun ChoresListTest() {
+fun ChoresListTest(modifier: Modifier) {
     val chores = listOf(
-        Chore(
-            id = 1,
-            name = "Chore 1"
-        ),
-        Chore(
-            id = 2,
-            name = "Chore 2"
-        ),
-        Chore(
-            id = 3,
-            name = "Chore 3"
-        )
+        Chore(id = 1, name = "Chore 1"),
+        Chore(id = 2, name = "Chore 2"),
+        Chore(id = 3, name = "Chore 3")
     )
-    Column(
+
+    Box(
         modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp) // Optional padding for screen edges
     ) {
-        ChoreList(chores = chores)
-        AddChoreButton(onClick = {})
+        // List of chores at the top, takes up remaining space
+        ChoreList(
+            chores = chores,
+            modifier = Modifier.padding(bottom = 80.dp) // Add padding to avoid overlap with button
+        )
+
+        // Button aligned to the bottom
+        AddChoreButton(
+            onClick = {},
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .height(50.dp)
+        )
+    }
+}
+
+@Composable
+fun AddChoreButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Button(
+        onClick = onClick,
+        modifier = modifier
+    ) {
+        Text(
+            text = "Add Chore",
+            fontSize = 25.sp
+        )
     }
 }
 
 @Preview
 @Composable
 fun ChoresListTestPreview() {
-    ChoresListTest()
-}
-
-@Composable
-fun AddChoreButton(onClick: () -> Unit) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp)
-    ) {
-        Text(text = "Add Chore")
+    ChoresMapTheme {
+        ChoresListTest(modifier = Modifier)
     }
 }
 
 @Preview
 @Composable
 fun AddChoreButtonPreview() {
-    AddChoreButton(onClick = {})
+    ChoresMapTheme {
+        AddChoreButton(onClick = {})
+    }
 }
 
 @Composable
@@ -142,4 +148,3 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
-
