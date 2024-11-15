@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.bogdan.choresmap.ui.theme.ChoresMapTheme
-import com.bogdan.choresmap.ui.components.ChoresListTest
+import com.bogdan.choresmap.ui.screens.HomeScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -18,8 +18,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             ChoresMapTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    ChoresListTest(
-                        modifier = Modifier.padding(innerPadding)
+                    HomeScreen(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
                     )
                 }
             }
