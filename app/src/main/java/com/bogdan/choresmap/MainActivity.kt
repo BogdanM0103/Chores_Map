@@ -52,7 +52,8 @@ fun Chore(name: String, modifier: Modifier = Modifier) {
     ) {
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
         ) {
             Text(
                 text = name,
@@ -66,12 +67,14 @@ fun Chore(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun ChoreList(chores: List<Chore>, modifier: Modifier = Modifier) {
     LazyColumn(
-        modifier = modifier.fillMaxWidth()
+        modifier = Modifier
+//            .fillMaxWidth()
     ) {
         items(chores) { chore ->
             Chore(
                 name = chore.name,
-                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
             )
         }
     }
@@ -88,7 +91,7 @@ fun ChoresListTest(modifier: Modifier) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp) // Optional padding for screen edges
+            .padding(top = 60.dp, bottom = 32.dp) // Optional padding for screen edges
     ) {
         // List of chores at the top, takes up remaining space
         ChoreList(
