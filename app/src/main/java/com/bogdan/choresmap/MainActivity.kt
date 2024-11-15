@@ -93,7 +93,8 @@ fun ChoresListTest(modifier: Modifier) {
         // List of chores at the top, takes up remaining space
         ChoreList(
             chores = chores,
-            modifier = Modifier.padding(bottom = 80.dp) // Add padding to avoid overlap with button
+            modifier = Modifier
+                .padding(bottom = 80.dp) // Add padding to avoid overlap with button
         )
 
         // Button aligned to the bottom
@@ -101,7 +102,7 @@ fun ChoresListTest(modifier: Modifier) {
             onClick = {},
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .fillMaxWidth()
+//                .fillMaxWidth()
                 .height(50.dp)
         )
     }
