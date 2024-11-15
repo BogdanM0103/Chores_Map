@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -68,7 +67,7 @@ fun ChoreList(chores: List<Chore>) {
         LazyColumn() {
             items(chores.size) { index ->
                 Chore(
-                    name = chores[index].getName,
+                    name = chores[index].name,
                     modifier = Modifier
                         .padding(
                             horizontal = 8.dp,
@@ -100,8 +99,7 @@ fun ChoresListTest() {
         modifier = Modifier
     ) {
         ChoreList(chores = chores)
-        Spacer(modifier = Modifier.height(50.dp))
-        AddChoreScreen(onClick = {})
+        AddChoreButton(onClick = {})
     }
 }
 
@@ -112,7 +110,7 @@ fun ChoresListTestPreview() {
 }
 
 @Composable
-fun AddChoreScreen(onClick: () -> Unit) {
+fun AddChoreButton(onClick: () -> Unit) {
     Button(
         onClick = onClick,
         modifier = Modifier
@@ -125,8 +123,8 @@ fun AddChoreScreen(onClick: () -> Unit) {
 
 @Preview
 @Composable
-fun AddChoreScreenPreview() {
-    AddChoreScreen(onClick = {})
+fun AddChoreButtonPreview() {
+    AddChoreButton(onClick = {})
 }
 
 @Composable
