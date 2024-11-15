@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun AddChoreScreen(onSubmit: (String) -> Unit = {}) {
+fun AddChoreScreen(onSubmit: (String) -> Unit = {}, modifier: Modifier) {
     var choreName by remember { mutableStateOf("") } // Now works correctly
     var choreDescription by remember { mutableStateOf("") }
 
@@ -74,5 +74,5 @@ fun AddChoreScreen(onSubmit: (String) -> Unit = {}) {
 @Preview
 @Composable
 fun AddChoreScreenPreview() {
-    AddChoreScreen()
+    AddChoreScreen(modifier = Modifier)
 }
