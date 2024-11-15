@@ -9,19 +9,27 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bogdan.choresmap.model.Chore
+import com.bogdan.choresmap.model.ChoreRepository
 import com.bogdan.choresmap.ui.theme.ChoresMapTheme
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,16 +58,32 @@ fun Chore(name: String, modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .height(60.dp)
     ) {
-        Box(
-            contentAlignment = Alignment.Center,
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
         ) {
             Text(
                 text = name,
                 fontSize = 25.sp,
                 modifier = Modifier.padding(16.dp)
             )
+            IconButton(
+                onClick = { /* Handle delete action */ },
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .size(64.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Delete,
+                    contentDescription = "Delete Chore",
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .size(64.dp)
+                )
+            }
         }
     }
 }
@@ -82,11 +106,9 @@ fun ChoreList(chores: List<Chore>, modifier: Modifier = Modifier) {
 
 @Composable
 fun ChoresListTest(modifier: Modifier) {
-    val chores = listOf(
-        Chore(id = 1, name = "Chore 1"),
-        Chore(id = 2, name = "Chore 2"),
-        Chore(id = 3, name = "Chore 3")
-    )
+    var chores by remember {
+        mutableStateOf(ChoreRepository.getChore())
+    }
 
     Box(
         modifier = Modifier
@@ -146,18 +168,18 @@ fun AddChoreButtonPreview() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview
-@Composable
-fun GreetingPreview() {
-    ChoresMapTheme {
-        Greeting("Android")
-    }
-}
+//@Composable
+//fun Greeting(name: String, modifier: Modifier = Modifier) {
+//    Text(
+//        text = "Hello $name!",
+//        modifier = modifier
+//    )
+//}
+//
+//@Preview
+//@Composable
+//fun GreetingPreview() {
+//    ChoresMapTheme {
+//        Greeting("Android")
+//    }
+//}
