@@ -10,10 +10,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.bogdan.choresmap.ui.components.ConfirmButton
 
 @Composable
-fun AddChoreScreen(onSubmit: (String, String) -> Unit = {_, _ -> }, modifier: Modifier) {
+fun AddChoreScreen(navController: NavHostController, modifier: Modifier = Modifier) {
     var choreName by remember { mutableStateOf("") } // Now works correctly
     var choreDescription by remember { mutableStateOf("") }
 
@@ -36,7 +38,7 @@ fun AddChoreScreen(onSubmit: (String, String) -> Unit = {_, _ -> }, modifier: Mo
         // Description Field
         TextField(
             value = choreDescription,
-            onValueChange = { /* Handle description change */ },
+            onValueChange = { choreDescription = it },
             label = {
                 Box(
                     modifier = Modifier.fillMaxWidth()
@@ -62,7 +64,7 @@ fun AddChoreScreen(onSubmit: (String, String) -> Unit = {_, _ -> }, modifier: Mo
         ConfirmButton(
             onClick = {
                 if (choreName.isNotBlank() && choreDescription.isNotBlank()) {
-                    onSubmit(choreName, choreDescription)
+                    navController.navigate("home")
                 }
             },
             modifier = Modifier
@@ -74,5 +76,5 @@ fun AddChoreScreen(onSubmit: (String, String) -> Unit = {_, _ -> }, modifier: Mo
 @Preview
 @Composable
 fun AddChoreScreenPreview() {
-    AddChoreScreen(modifier = Modifier)
+    AddChoreScreen(navController = rememberNavController(), modifier = Modifier)
 }
