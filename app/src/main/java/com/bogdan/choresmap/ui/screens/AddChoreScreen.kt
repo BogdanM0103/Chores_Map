@@ -11,9 +11,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.bogdan.choresmap.ui.components.ConfirmButton
 
 @Composable
-fun AddChoreScreen(onSubmit: (String) -> Unit = {}, modifier: Modifier) {
+fun AddChoreScreen(onSubmit: (String, String) -> Unit = {_, _ -> }, modifier: Modifier) {
     var choreName by remember { mutableStateOf("") } // Now works correctly
     var choreDescription by remember { mutableStateOf("") }
 
@@ -58,16 +59,16 @@ fun AddChoreScreen(onSubmit: (String) -> Unit = {}, modifier: Modifier) {
                 .height(16.dp)
         )
 
-        // Submit Button
-        Button(
+        // Confirm Button
+        ConfirmButton(
             onClick = {
-                if (choreName.isNotBlank()) {
-                    onSubmit(choreName)
+                if (choreName.isNotBlank() && choreDescription.isNotBlank()) {
+                    onSubmit(choreName, choreDescription)
                 }
-            }
-        ) {
-            Text("Submit")
-        }
+            },
+            modifier = Modifier
+//                .fillMaxWidth()
+        )
     }
 }
 
