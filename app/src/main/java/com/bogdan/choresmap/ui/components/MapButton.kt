@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun MapButton(
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     IconButton(

@@ -62,6 +62,7 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
 
                 // Map Button
                 MapButton(
+                    onClick = { navController.navigate("map") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp)

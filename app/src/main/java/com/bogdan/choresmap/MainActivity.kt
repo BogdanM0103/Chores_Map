@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.bogdan.choresmap.ui.screens.AddChoreScreen
 import com.bogdan.choresmap.ui.theme.ChoresMapTheme
 import com.bogdan.choresmap.ui.screens.HomeScreen
+import com.bogdan.choresmap.ui.screens.MapScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -46,6 +47,9 @@ fun AppNavigation(
         }
         composable("addChore") {
             AddChoreScreen(navController)
+        }
+        composable("map") {
+            MapScreen(navController)
         }
     }
 }
