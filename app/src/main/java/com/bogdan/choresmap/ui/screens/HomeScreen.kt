@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.bogdan.choresmap.model.ChoreRepository
 import com.bogdan.choresmap.ui.components.AddChoreButton
 import com.bogdan.choresmap.ui.components.ChoreList
+import com.bogdan.choresmap.ui.components.MapButton
 
 @Composable
 fun HomeScreen(modifier: Modifier) {
@@ -42,6 +43,13 @@ fun HomeScreen(modifier: Modifier) {
                 .align(Alignment.BottomCenter)
 //                .fillMaxWidth()
                 .height(50.dp)
+        )
+
+        // Map Button
+        MapButton(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(16.dp)
         )
     }
 }
