@@ -8,7 +8,7 @@ import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun MapScreen(navController: NavHostController, modifier: Modifier = Modifier) {
-
+    
 }
 
 @Preview
