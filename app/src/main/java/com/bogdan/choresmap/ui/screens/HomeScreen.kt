@@ -18,12 +18,17 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.bogdan.choresmap.model.ChoreRepository
+import com.bogdan.choresmap.model.ChoreViewModel
 import com.bogdan.choresmap.ui.components.AddChoreButton
 import com.bogdan.choresmap.ui.components.ChoreList
 import com.bogdan.choresmap.ui.components.MapButton
 
 @Composable
-fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) {
+fun HomeScreen(
+    navController: NavHostController,
+    choreViewModel: ChoreViewModel,
+    modifier: Modifier = Modifier
+) {
     var chores by remember {
         mutableStateOf(ChoreRepository.getChore())
     }
@@ -76,5 +81,5 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(navController = rememberNavController())
+    HomeScreen(navController = rememberNavController(), choreViewModel = ChoreViewModel())
 }

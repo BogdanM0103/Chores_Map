@@ -12,10 +12,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.bogdan.choresmap.model.ChoreViewModel
 import com.bogdan.choresmap.ui.components.ConfirmButton
 
 @Composable
-fun AddChoreScreen(navController: NavHostController, modifier: Modifier = Modifier) {
+fun AddChoreScreen(
+    navController: NavHostController,
+    choreViewModel: ChoreViewModel,
+    modifier: Modifier = Modifier
+) {
     var choreName by remember { mutableStateOf("") } // Now works correctly
     var choreDescription by remember { mutableStateOf("") }
 
@@ -76,5 +81,9 @@ fun AddChoreScreen(navController: NavHostController, modifier: Modifier = Modifi
 @Preview
 @Composable
 fun AddChoreScreenPreview() {
-    AddChoreScreen(navController = rememberNavController(), modifier = Modifier)
+    AddChoreScreen(
+        navController = rememberNavController(),
+        choreViewModel = ChoreViewModel(),
+        modifier = Modifier
+    )
 }

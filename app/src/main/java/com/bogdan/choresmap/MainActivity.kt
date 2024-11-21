@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.bogdan.choresmap.model.ChoreViewModel
 import com.bogdan.choresmap.ui.screens.AddChoreScreen
 import com.bogdan.choresmap.ui.theme.ChoresMapTheme
 import com.bogdan.choresmap.ui.screens.HomeScreen
@@ -28,6 +29,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     AppNavigation(
                         navController = navController,
+                        choreViewModel = ChoreViewModel(),
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -39,14 +41,15 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavigation(
     navController: NavHostController,
+    choreViewModel: ChoreViewModel,
     modifier: Modifier
     ) {
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
-            HomeScreen(navController)
+            HomeScreen(navController, choreViewModel = ChoreViewModel())
         }
         composable("addChore") {
-            AddChoreScreen(navController)
+            AddChoreScreen(navController, choreViewModel = ChoreViewModel())
         }
         composable("map") {
             MapScreen(navController)
