@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,9 +28,10 @@ class MainActivity : ComponentActivity() {
             ChoresMapTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val navController = rememberNavController()
+                    val choreViewModel : ChoreViewModel = viewModel()
                     AppNavigation(
                         navController = navController,
-                        choreViewModel = ChoreViewModel(),
+                        choreViewModel = choreViewModel,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -46,10 +48,10 @@ fun AppNavigation(
     ) {
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
-            HomeScreen(navController, choreViewModel = ChoreViewModel())
+            HomeScreen(navController, choreViewModel = choreViewModel)
         }
         composable("addChore") {
-            AddChoreScreen(navController, choreViewModel = ChoreViewModel())
+            AddChoreScreen(navController, choreViewModel = choreViewModel)
         }
         composable("map") {
             MapScreen(navController)

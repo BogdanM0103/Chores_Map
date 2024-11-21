@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,9 +30,10 @@ fun HomeScreen(
     choreViewModel: ChoreViewModel,
     modifier: Modifier = Modifier
 ) {
-    var chores by remember {
-        mutableStateOf(ChoreRepository.getChore())
-    }
+//    var chores by remember {
+//        mutableStateOf(ChoreRepository.getChore())
+//    }
+    val chores = choreViewModel.chores.collectAsState().value
 
     Box(
         modifier = Modifier

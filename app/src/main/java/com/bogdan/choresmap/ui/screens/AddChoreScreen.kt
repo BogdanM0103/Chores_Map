@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.bogdan.choresmap.model.Chore
 import com.bogdan.choresmap.model.ChoreViewModel
 import com.bogdan.choresmap.ui.components.ConfirmButton
 
@@ -69,6 +70,12 @@ fun AddChoreScreen(
         ConfirmButton(
             onClick = {
                 if (choreName.isNotBlank() && choreDescription.isNotBlank()) {
+                    choreViewModel.addChore(
+                        Chore(
+                            id = System.currentTimeMillis().toInt(),
+                            name = choreName
+                        )
+                    )
                     navController.navigate("home")
                 }
             },
