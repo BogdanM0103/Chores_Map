@@ -46,7 +46,7 @@ fun AppNavigation(
     choreViewModel: ChoreViewModel,
     modifier: Modifier
     ) {
-    NavHost(navController = navController, startDestination = "map") {
+    NavHost(navController = navController, startDestination = "home") {
         composable("home") {
             HomeScreen(navController, choreViewModel = choreViewModel)
         }
