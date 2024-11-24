@@ -61,6 +61,10 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
     implementation(libs.ui) // Jetpack Compose UI dependency
+    implementation(libs.secrets.gradle.plugin)
+
+    implementation("com.google.maps.android:maps-compose:2.11.3")
+    implementation("com.google.android.gms:play-services-maps:18.0.2")
 
     // Navigation Compose dependency
     implementation("androidx.navigation:navigation-compose:2.8.3")
