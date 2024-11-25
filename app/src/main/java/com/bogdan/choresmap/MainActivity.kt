@@ -1,6 +1,5 @@
 package com.bogdan.choresmap
 
-import MapScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,7 +17,7 @@ import com.bogdan.choresmap.model.ChoreViewModel
 import com.bogdan.choresmap.ui.screens.AddChoreScreen
 import com.bogdan.choresmap.ui.theme.ChoresMapTheme
 import com.bogdan.choresmap.ui.screens.HomeScreen
-
+import com.bogdan.choresmap.ui.screens.MapScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
