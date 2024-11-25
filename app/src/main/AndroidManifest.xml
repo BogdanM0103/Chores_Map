@@ -6,9 +6,15 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <!-- Optional: Location permissions, if needed in the future -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Always include this permission -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Include only if your app benefits from precise location access. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- Required only when requesting background location access on
+       Android 10 (API level 29) and higher. -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -26,6 +32,14 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDok9QgrTQGCJX0EyLuC3IKrhLuNQpvnKc" />
 
+        <!-- Your foreground service -->
+        <service
+            android:name=".MyNavigationService"
+            android:foregroundServiceType="location"
+            android:enabled="true"
+            android:exported="false">
+            <!-- Add any required intent-filters here -->
+        </service>
 
         <activity
             android:name=".MainActivity"
