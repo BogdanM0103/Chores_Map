@@ -33,7 +33,7 @@ fun HomeScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 60.dp, bottom = 32.dp) // Optional padding for screen edges
+            .padding(top = 60.dp, bottom = 100.dp) // Optional padding for screen edges
     ) {
         // List of chores at the top
         ChoreList(
