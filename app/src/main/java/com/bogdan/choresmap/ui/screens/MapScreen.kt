@@ -1,10 +1,7 @@
 package com.bogdan.choresmap.ui.screens
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
