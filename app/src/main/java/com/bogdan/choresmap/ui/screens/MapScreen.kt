@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.bogdan.choresmap.ui.components.fetchLocationWithGPS
 
 @Composable
 fun MapScreen(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -95,37 +96,4 @@ fun MapScreen(navController: NavHostController, modifier: Modifier = Modifier) {
             )
         }
     }
-}
-
-private fun fetchLocationWithGPS(context: Context, onLocationReceived: (Location) -> Unit) {
-    val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
-    if (ActivityCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-    ) {
-        locationManager.requestLocationUpdates(
-            LocationManager.GPS_PROVIDER,
-            1000L, // Minimum time interval between updates (in milliseconds)
-            1f     // Minimum distance between updates (in meters)
-        ) { location ->
-            onLocationReceived(location)
-        }
-    }
-}
-
-private fun getLastKnownLocation(context: android.content.Context): LatLng? {
-    val locationManager = context.getSystemService(android.content.Context.LOCATION_SERVICE) as android.location.LocationManager
-    val provider = android.location.LocationManager.GPS_PROVIDER
-
-    if (ActivityCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-    ) {
-        val location = locationManager.getLastKnownLocation(provider)
-        return location?.let { LatLng(it.latitude, it.longitude) }
-    }
-    return null
 }
