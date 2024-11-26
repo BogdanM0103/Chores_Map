@@ -39,6 +39,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// This handles the navigation between screens.
 @Composable
 fun AppNavigation(
     navController: NavHostController,

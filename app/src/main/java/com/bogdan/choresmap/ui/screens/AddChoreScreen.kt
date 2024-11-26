@@ -16,6 +16,7 @@ import com.bogdan.choresmap.model.Chore
 import com.bogdan.choresmap.model.ChoreViewModel
 import com.bogdan.choresmap.ui.components.ConfirmButton
 
+// The form of the chore that will be added
 @Composable
 fun AddChoreScreen(
     navController: NavHostController,

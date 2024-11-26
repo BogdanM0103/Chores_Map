@@ -19,15 +19,13 @@ import com.bogdan.choresmap.ui.components.AddChoreButton
 import com.bogdan.choresmap.ui.components.ChoreList
 import com.bogdan.choresmap.ui.components.MapButton
 
+// The main screen of the application from which all the other screens can be accessed
 @Composable
 fun HomeScreen(
     navController: NavHostController,
     choreViewModel: ChoreViewModel,
     modifier: Modifier = Modifier
 ) {
-//    var chores by remember {
-//        mutableStateOf(ChoreRepository.getChore())
-//    }
     val chores = choreViewModel.chores.collectAsState().value
 
     Box(
