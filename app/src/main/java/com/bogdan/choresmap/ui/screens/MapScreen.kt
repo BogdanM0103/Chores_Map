@@ -70,7 +70,16 @@ fun MapScreen(navController: NavHostController, modifier: Modifier = Modifier) {
     Box(modifier = Modifier.fillMaxSize()) {
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
-            cameraPositionState = cameraPositionState
+            cameraPositionState = cameraPositionState,
+            uiSettings = com.google.maps.android.compose.MapUiSettings(
+                myLocationButtonEnabled = true
+            ),
+            properties = com.google.maps.android.compose.MapProperties(
+                isMyLocationEnabled = ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            )
         )
         // Home Icon Button overlaid at the bottom center
         IconButton(
@@ -104,4 +113,19 @@ private fun fetchLocationWithGPS(context: Context, onLocationReceived: (Location
             onLocationReceived(location)
         }
     }
+}
+
+private fun getLastKnownLocation(context: android.content.Context): LatLng? {
+    val locationManager = context.getSystemService(android.content.Context.LOCATION_SERVICE) as android.location.LocationManager
+    val provider = android.location.LocationManager.GPS_PROVIDER
+
+    if (ActivityCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    ) {
+        val location = locationManager.getLastKnownLocation(provider)
+        return location?.let { LatLng(it.latitude, it.longitude) }
+    }
+    return null
 }
