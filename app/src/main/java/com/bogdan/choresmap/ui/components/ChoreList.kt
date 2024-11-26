@@ -11,7 +11,11 @@ import com.bogdan.choresmap.model.Chore
 import com.bogdan.choresmap.model.ChoreRepository
 
 @Composable
-fun ChoreList(chores: List<Chore>, modifier: Modifier = Modifier) {
+fun ChoreList(
+    chores: List<Chore>,
+    onDeleteChore: (Chore) -> Unit,
+    modifier: Modifier = Modifier
+) {
     LazyColumn(
         modifier = Modifier
 //            .fillMaxWidth()
@@ -19,6 +23,7 @@ fun ChoreList(chores: List<Chore>, modifier: Modifier = Modifier) {
         items(chores) { chore ->
             Chore(
                 name = chore.name,
+                onDeleteClick = { onDeleteChore(chore) },
                 modifier = Modifier
                     .padding(horizontal = 8.dp, vertical = 4.dp)
             )
@@ -31,6 +36,7 @@ fun ChoreList(chores: List<Chore>, modifier: Modifier = Modifier) {
 fun ChoreListPreview() {
     ChoreList(
         chores = ChoreRepository.getChore(),
+        onDeleteChore = {},
         modifier = Modifier
     )
 }

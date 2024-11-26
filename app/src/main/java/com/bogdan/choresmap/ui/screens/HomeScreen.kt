@@ -41,6 +41,7 @@ fun HomeScreen(
         // List of chores at the top
         ChoreList(
             chores = chores,
+            onDeleteChore = { chore -> choreViewModel.removeChore(chore) },
             modifier = Modifier
                 .fillMaxSize()
                 .padding(bottom = 120.dp) // Reserve space for buttons

@@ -20,7 +20,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun Chore(name: String, modifier: Modifier = Modifier) {
+fun Chore(
+    name: String,
+    onDeleteClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -39,7 +43,7 @@ fun Chore(name: String, modifier: Modifier = Modifier) {
                 modifier = Modifier.padding(16.dp)
             )
             IconButton(
-                onClick = { /* Handle delete action */ },
+                onClick = onDeleteClick,
                 modifier = Modifier
                     .padding(end = 8.dp)
                     .size(64.dp)
@@ -61,6 +65,7 @@ fun Chore(name: String, modifier: Modifier = Modifier) {
 fun ChorePreview() {
     Chore(
         name = "Chore Preview",
+        onDeleteClick = {},
         modifier = Modifier
     )
 }

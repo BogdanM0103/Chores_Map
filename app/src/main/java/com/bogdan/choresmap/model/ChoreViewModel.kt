@@ -14,4 +14,9 @@ class ChoreViewModel : ViewModel() {
     fun addChore(chore: Chore) {
         _chores.value = _chores.value + chore
     }
+
+    // Function to remove chore
+    fun removeChore(chore: Chore) {
+        _chores.value = _chores.value - chore
+    }
 }
