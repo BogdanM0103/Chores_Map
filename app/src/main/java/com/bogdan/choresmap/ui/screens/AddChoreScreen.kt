@@ -21,14 +21,13 @@ import com.bogdan.choresmap.ui.components.ConfirmButton
 import com.bogdan.choresmap.ui.components.fetchPlacesAutocomplete
 import kotlinx.coroutines.launch
 
-// The form of the chore that will be added
 @Composable
 fun AddChoreScreen(
     navController: NavHostController,
     choreViewModel: ChoreViewModel,
     modifier: Modifier = Modifier
 ) {
-    var choreName by remember { mutableStateOf("") } // Now works correctly
+    var choreName by remember { mutableStateOf("") }
     var choreDescription by remember { mutableStateOf("") }
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -37,22 +36,23 @@ fun AddChoreScreen(
     var selectedPlace by remember { mutableStateOf("") }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Input Field
+        // Input Field for Chore Name
         TextField(
             value = choreName,
             onValueChange = { choreName = it },
             label = { Text("Chore Name") },
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         )
 
-        // Places API Autocomplete input
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Places API Autocomplete Input
         TextField(
             value = placeQuery,
             onValueChange = { query ->
@@ -67,7 +67,7 @@ fun AddChoreScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        // Display autocomplete suggestions
+        // Autocomplete Suggestions
         autocompleteSuggestions.forEach { suggestion ->
             ClickableText(
                 text = AnnotatedString(suggestion),
@@ -76,18 +76,18 @@ fun AddChoreScreen(
                     placeQuery = suggestion
                     autocompleteSuggestions = emptyList() // Clear suggestions
                 },
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(vertical = 4.dp)
             )
         }
+
+        Spacer(modifier = Modifier.height(8.dp))
 
         // Description Field
         TextField(
             value = choreDescription,
             onValueChange = { choreDescription = it },
             label = {
-                Box(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
+                Box(modifier = Modifier.fillMaxWidth()) {
                     Text(
                         text = "Description",
                         style = TextStyle(
@@ -96,30 +96,27 @@ fun AddChoreScreen(
                     )
                 }
             },
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(
-            modifier = Modifier
-                .height(16.dp)
-        )
+        Spacer(modifier = Modifier.height(16.dp))
 
         // Confirm Button
         ConfirmButton(
             onClick = {
-                if (choreName.isNotBlank() && choreDescription.isNotBlank()) {
+                if (choreName.isNotBlank() && choreDescription.isNotBlank() && selectedPlace.isNotBlank()) {
                     choreViewModel.addChore(
                         Chore(
                             id = System.currentTimeMillis().toInt(),
-                            name = choreName
+                            name = choreName,
+                            description = choreDescription,
+                            location = selectedPlace // Store as string or geocode as LatLng
                         )
                     )
                     navController.navigate("home")
                 }
             },
-            modifier = Modifier
-//                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
