@@ -67,7 +67,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.0.2")
 
     // Places API
-    implementation("com.google.android.libraries.places:2.7.0")
+    implementation("com.google.android.libraries.places:places:3.5.0")
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.0.0"))
 
     // Navigation Compose dependency
     implementation("androidx.navigation:navigation-compose:2.8.3")
