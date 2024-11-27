@@ -18,11 +18,18 @@ import com.bogdan.choresmap.ui.screens.AddChoreScreen
 import com.bogdan.choresmap.ui.theme.ChoresMapTheme
 import com.bogdan.choresmap.ui.screens.HomeScreen
 import com.bogdan.choresmap.ui.screens.MapScreen
+import com.google.android.libraries.places.api.Places
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // Initialize the Places API
+        if (!Places.isInitialized()) {
+            Places.initialize(applicationContext, "AIzaSyDok9QgrTQGCJX0EyLuC3IKrhLuNQpvnKc")
+        }
+
         setContent {
             ChoresMapTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
