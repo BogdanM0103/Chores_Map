@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.bogdan.choresmap.model.ChoreViewModel
+import com.bogdan.choresmap.ui.components.AppNavigation
 import com.bogdan.choresmap.ui.screens.AddChoreScreen
 import com.bogdan.choresmap.ui.theme.ChoresMapTheme
 import com.bogdan.choresmap.ui.screens.HomeScreen
@@ -42,26 +43,6 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             }
-        }
-    }
-}
-
-// This handles the navigation between screens.
-@Composable
-fun AppNavigation(
-    navController: NavHostController,
-    choreViewModel: ChoreViewModel,
-    modifier: Modifier
-    ) {
-    NavHost(navController = navController, startDestination = "home") {
-        composable("home") {
-            HomeScreen(navController, choreViewModel = choreViewModel)
-        }
-        composable("addChore") {
-            AddChoreScreen(navController, choreViewModel = choreViewModel)
-        }
-        composable("map") {
-            MapScreen(navController, choreViewModel = choreViewModel, modifier = Modifier)
         }
     }
 }
