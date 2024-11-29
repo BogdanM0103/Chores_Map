@@ -19,6 +19,8 @@ import com.bogdan.choresmap.model.Chore
 import com.bogdan.choresmap.model.ChoreViewModel
 import com.bogdan.choresmap.ui.components.ConfirmButton
 import com.bogdan.choresmap.ui.components.fetchPlacesAutocomplete
+import com.bogdan.choresmap.ui.components.geocodePlace
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.launch
 
 @Composable
@@ -33,7 +35,7 @@ fun AddChoreScreen(
     val coroutineScope = rememberCoroutineScope()
     var placeQuery by remember { mutableStateOf("") }
     var autocompleteSuggestions by remember { mutableStateOf(listOf<String>()) }
-    var selectedPlace by remember { mutableStateOf("") }
+    var selectedPlace by remember { mutableStateOf<LatLng?>(null) }
 
     Column(
         modifier = modifier
@@ -72,7 +74,8 @@ fun AddChoreScreen(
             ClickableText(
                 text = AnnotatedString(suggestion),
                 onClick = {
-                    selectedPlace = suggestion
+                    val geocodedLatLng = geocodePlace(context, suggestion)
+                    selectedPlace = geocodedLatLng
                     placeQuery = suggestion
                     autocompleteSuggestions = emptyList() // Clear suggestions
                 },
@@ -104,13 +107,13 @@ fun AddChoreScreen(
         // Confirm Button
         ConfirmButton(
             onClick = {
-                if (choreName.isNotBlank() && choreDescription.isNotBlank() && selectedPlace.isNotBlank()) {
+                if (choreName.isNotBlank() && choreDescription.isNotBlank() && selectedPlace != null) {
                     choreViewModel.addChore(
                         Chore(
                             id = System.currentTimeMillis().toInt(),
                             name = choreName,
                             description = choreDescription,
-                            location = selectedPlace // Store as string or geocode as LatLng
+                            location = selectedPlace!! // Store as string or geocode as LatLng, ensure location is not null
                         )
                     )
                     navController.navigate("home")

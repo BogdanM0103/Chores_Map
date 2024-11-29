@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bogdan.choresmap.model.Chore
-import com.bogdan.choresmap.model.ChoreRepository
 
 @Composable
 fun ChoreList(
@@ -29,14 +28,4 @@ fun ChoreList(
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun ChoreListPreview() {
-    ChoreList(
-        chores = ChoreRepository.getChore(),
-        onDeleteChore = {},
-        modifier = Modifier
-    )
 }

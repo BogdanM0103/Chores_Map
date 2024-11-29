@@ -19,16 +19,23 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavHostController
+import com.bogdan.choresmap.model.ChoreViewModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.bogdan.choresmap.ui.components.fetchLocationWithGPS
+import com.google.maps.android.compose.Marker
 
 @Composable
-fun MapScreen(navController: NavHostController, modifier: Modifier = Modifier) {
+fun MapScreen(
+    navController: NavHostController,
+    choreViewModel: ChoreViewModel,
+    modifier: Modifier = Modifier
+) {
     val context = LocalContext.current
     var userLocation by remember { mutableStateOf<LatLng?>(null) }
+    val chores by choreViewModel.chores.collectAsState()
 
     // Request location permission
     val permissionLauncher = rememberLauncherForActivityResult(
@@ -70,14 +77,22 @@ fun MapScreen(navController: NavHostController, modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxSize(),
             cameraPositionState = cameraPositionState,
             uiSettings = com.google.maps.android.compose.MapUiSettings(
-                myLocationButtonEnabled = true
+                myLocationButtonEnabled = true,
+                zoomControlsEnabled = true
             ),
             properties = com.google.maps.android.compose.MapProperties(
                 isMyLocationEnabled = ActivityCompat.checkSelfPermission(
                     context,
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
-            )
+            ),
+            chores.forEach { chore ->
+                Marker(
+                    position = chore.location,
+                    title = chore.name,
+                    snippet = chore.description
+                )
+            }
         )
         // Home Icon Button overlaid at the bottom center
         IconButton(
