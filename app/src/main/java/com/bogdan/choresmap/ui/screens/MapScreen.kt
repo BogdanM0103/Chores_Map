@@ -26,6 +26,7 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.bogdan.choresmap.ui.components.fetchLocationWithGPS
 import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
 
 @Composable
 fun MapScreen(
@@ -85,15 +86,19 @@ fun MapScreen(
                     context,
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
-            ),
+            )
+        ) {
+            // Add markers for each chore
             chores.forEach { chore ->
-                Marker(
-                    position = chore.location,
-                    title = chore.name,
-                    snippet = chore.description
-                )
+                chore.location?.let { MarkerState(position = it) }?.let {
+                    Marker(
+                        state = it,
+                        title = chore.name,
+                        snippet = chore.description
+                    )
+                }
             }
-        )
+        }
         // Home Icon Button overlaid at the bottom center
         IconButton(
             onClick = { navController.navigate("home") },

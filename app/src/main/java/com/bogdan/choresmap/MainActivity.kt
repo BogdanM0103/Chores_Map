@@ -61,7 +61,7 @@ fun AppNavigation(
             AddChoreScreen(navController, choreViewModel = choreViewModel)
         }
         composable("map") {
-            MapScreen(navController, modifier = Modifier)
+            MapScreen(navController, choreViewModel = choreViewModel, modifier = Modifier)
         }
     }
 }
