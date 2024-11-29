@@ -6,19 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.bogdan.choresmap.model.ChoreViewModel
 import com.bogdan.choresmap.ui.components.AppNavigation
-import com.bogdan.choresmap.ui.screens.AddChoreScreen
 import com.bogdan.choresmap.ui.theme.ChoresMapTheme
-import com.bogdan.choresmap.ui.screens.HomeScreen
-import com.bogdan.choresmap.ui.screens.MapScreen
 import com.google.android.libraries.places.api.Places
 
 class MainActivity : ComponentActivity() {
