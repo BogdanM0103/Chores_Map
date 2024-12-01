@@ -10,6 +10,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/*
+    This button takes the user to the home screen of the app.
+ */
+
 @Composable
 fun HomeButton(
     onClick: () -> Unit,

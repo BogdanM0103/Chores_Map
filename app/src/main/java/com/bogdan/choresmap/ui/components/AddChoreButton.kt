@@ -13,6 +13,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bogdan.choresmap.ui.theme.ChoresMapTheme
 
+/*
+    This Button takes the user to AddChoreScreen
+ */
+
 @Composable
 fun AddChoreButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     Button(

@@ -10,7 +10,9 @@ import com.bogdan.choresmap.ui.screens.AddChoreScreen
 import com.bogdan.choresmap.ui.screens.HomeScreen
 import com.bogdan.choresmap.ui.screens.MapScreen
 
-// This handles the navigation between screens.
+/*
+* This function handles everything Navigation related and is called in the MainActivity.
+* */
 @Composable
 fun AppNavigation(
     navController: NavHostController,
@@ -18,7 +20,29 @@ fun AppNavigation(
     modifier: Modifier
 ) {
     NavHost(navController = navController, startDestination = "home") {
+
+        /*
+        * The lambda passed to the NavHost ultimately calls NavController.createGraph() and returns a NavGraph.
+        * Each route is supplied as a type argument to NavGraphBuilder.composable<T>() which adds the destination to the resulting NavGraph.
+        * */
+
+        /*
+        * To better understand the lambda that creates the NavGraph, consider that to build the same graph as in the preceding snippet,
+        * you could create the NavGraph separately using
+        * NavController.createGraph() and pass it to the NavHost directly:
+        val navGraph by remember(navController) {
+            navController.createGraph(startDestination = Profile)) {
+                composable<Profile> { ProfileScreen( /* ... */ ) }
+                composable<FriendsList> { FriendsListScreen( /* ... */ ) }
+            }
+        }
+        NavHost(navController, navGraph)
+         */
+
         composable("home") {
+            /*
+            * The lambda passed to composable is what the NavHost displays for that destination.
+            * */
             HomeScreen(navController, choreViewModel = choreViewModel)
         }
         composable("addChore") {

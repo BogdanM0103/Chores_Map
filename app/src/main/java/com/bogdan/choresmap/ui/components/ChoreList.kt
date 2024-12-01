@@ -9,6 +9,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bogdan.choresmap.model.Chore
 
+/*
+    This is the List that contains all the Chores diven by the user.
+    It starts empty.
+ */
+
 @Composable
 fun ChoreList(
     chores: List<Chore>,

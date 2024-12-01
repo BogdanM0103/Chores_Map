@@ -11,6 +11,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/*
+    This Button upon completing the form, takes the user to HomeScreen.
+ */
+
 @Composable
 fun ConfirmButton(
     text: String = "Confirm",

@@ -29,12 +29,36 @@ fun AddChoreScreen(
     choreViewModel: ChoreViewModel,
     modifier: Modifier = Modifier
 ) {
+
+    /*
+        Any changes to value schedules recomposition of any composable functions that read value.
+        The value is retained after navigating to a different Screen.
+     */
+
+    // Stores the name of the Chore
     var choreName by remember { mutableStateOf("") }
+
+    // Store the description of the Chore
     var choreDescription by remember { mutableStateOf("") }
+
+    // Context is used to access resources and system services, including starting geofencing operations or
+    // requesting permissions
     val context = LocalContext.current
+
+    // CoroutineScope is used in AddChoreScreen to launch asynchronous tasks such as fetching autocomplete suggestions
+    // for the location input field, ensuring these operations do not block the main thread and maintain a responsive UI.
     val coroutineScope = rememberCoroutineScope()
+
+    // placeQuery holds the current text entered in the location input field.
+    // It is used to trigger the Places API autocomplete suggestions based on user input.
     var placeQuery by remember { mutableStateOf("") }
+
+    // autocompleteSuggestions holds the list of location suggestions fetched from the Places API.
+    // These suggestions are displayed below the location input field for the user to select.
     var autocompleteSuggestions by remember { mutableStateOf(listOf<String>()) }
+
+    // selectedPlace stores the location selected by the user from the autocomplete suggestions.
+    // It is used to associate a specific place with the chore being created.
     var selectedPlace by remember { mutableStateOf<LatLng?>(null) }
 
     Column(
@@ -94,7 +118,7 @@ fun AddChoreScreen(
                     Text(
                         text = "Description",
                         style = TextStyle(
-                            fontSize = if (choreDescription.length > 30) 12.sp else 16.sp
+                            //fontSize = if (choreDescription.length > 30) 12.sp else 16.sp
                         )
                     )
                 }
@@ -102,11 +126,17 @@ fun AddChoreScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
+        // Small space between the buttons
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Confirm Button
+        /*
+            ConfirmButton is called and it takes the user back to HomeScreen
+         */
         ConfirmButton(
             onClick = {
+                // Verifies if the name of the chore is not empty.
+                // Verifies if the description of the chore is not empty.
+                // Verifies if the user chose a location.
                 if (choreName.isNotBlank() && choreDescription.isNotBlank() && selectedPlace != null) {
                     choreViewModel.addChore(
                         Chore(
@@ -116,6 +146,7 @@ fun AddChoreScreen(
                             location = selectedPlace!! // Store as string or geocode as LatLng, ensure location is not null
                         )
                     )
+                    // Navigating to HomeScreen
                     navController.navigate("home")
                 }
             },

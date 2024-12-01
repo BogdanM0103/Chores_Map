@@ -27,8 +27,17 @@ class MainActivity : ComponentActivity() {
         setContent {
             ChoresMapTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    /*
+                    This is the navigation controller.
+                    The central coordinator for managing navigation between destinations.
+                    The controller offers methods for navigating between destinations, handling deep links,
+                    managing the back stack, and more.
+                    * */
                     val navController = rememberNavController()
+
+
                     val choreViewModel : ChoreViewModel = viewModel()
+
                     AppNavigation(
                         navController = navController,
                         choreViewModel = choreViewModel,

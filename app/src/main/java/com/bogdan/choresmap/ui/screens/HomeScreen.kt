@@ -19,7 +19,9 @@ import com.bogdan.choresmap.ui.components.AddChoreButton
 import com.bogdan.choresmap.ui.components.ChoreList
 import com.bogdan.choresmap.ui.components.MapButton
 
-// The main screen of the application from which all the other screens can be accessed
+/*
+    The main screen of the application from which all the other screens can be accessed
+ */
 @Composable
 fun HomeScreen(
     navController: NavHostController,
@@ -36,7 +38,7 @@ fun HomeScreen(
 //                bottom = 100.dp
             ) // Optional padding for screen edges
     ) {
-        // List of chores at the top
+        // Calling the List of Chores
         ChoreList(
             chores = chores,
             onDeleteChore = { chore -> choreViewModel.removeChore(chore) },
@@ -45,9 +47,10 @@ fun HomeScreen(
                 .padding(bottom = 120.dp) // Reserve space for buttons
         )
 
-        // Buttons aligned at the bottom
+        // This Box contains the AddChoreButton and the MapButton pinned at the bottom of the screen
         Box(
             modifier = Modifier
+                // aligns the Box with buttons at the bottom of the screen
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 16.dp)
         ) {
@@ -55,7 +58,7 @@ fun HomeScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                // Add Chore Button
+                // AddChoreButton is called
                 AddChoreButton(
                     onClick = { navController.navigate("addChore") },
                     modifier = Modifier
@@ -64,7 +67,7 @@ fun HomeScreen(
                         .padding(horizontal = 16.dp)
                 )
 
-                // Map Button
+                // Map Button is called
                 MapButton(
                     onClick = { navController.navigate("map") },
                     modifier = Modifier

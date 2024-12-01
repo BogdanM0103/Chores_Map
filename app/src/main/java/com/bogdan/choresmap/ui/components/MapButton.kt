@@ -10,6 +10,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/*
+    This is the Button that takes the user to the map screen.
+ */
+
 @Composable
 fun MapButton(
     onClick: () -> Unit,

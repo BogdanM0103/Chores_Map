@@ -19,6 +19,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/*
+    This is the composable that fill appear in the Chore List
+    as a list item with the name and the delete icon.
+ */
+
 @Composable
 fun Chore(
     name: String,
