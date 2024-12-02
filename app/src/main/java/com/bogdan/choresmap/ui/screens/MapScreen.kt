@@ -51,6 +51,12 @@ fun MapScreen(
     // provided by the ViewModel and update the `chores` variable accordingly.
     val chores by choreViewModel.chores.collectAsState()
 
+    /**
+     * Create and remember a CameraPositionState instance to manage the camera's position on the Google Map.
+     * This state object allows you to programmatically control and update the camera's position and zoom level.
+     */
+    val cameraPositionState = rememberCameraPositionState()
+
     /*
         This function initializes a launcher for requesting runtime permissions and handles the user's response.
 
@@ -110,12 +116,6 @@ fun MapScreen(
             permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
-
-    /**
-     * Create and remember a CameraPositionState instance to manage the camera's position on the Google Map.
-     * This state object allows you to programmatically control and update the camera's position and zoom level.
-     */
-    val cameraPositionState = rememberCameraPositionState()
 
     // A LaunchedEffect block is used to perform a side effect whenever the `userLocation` value changes.
     // This ensures that the camera position on the map updates whenever the user's location is updated.
