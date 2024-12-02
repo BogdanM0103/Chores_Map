@@ -111,11 +111,20 @@ fun MapScreen(
         }
     }
 
+    /**
+     * Create and remember a CameraPositionState instance to manage the camera's position on the Google Map.
+     * This state object allows you to programmatically control and update the camera's position and zoom level.
+     */
     val cameraPositionState = rememberCameraPositionState()
 
-    // Update camera position when location changes
+    // A LaunchedEffect block is used to perform a side effect whenever the `userLocation` value changes.
+    // This ensures that the camera position on the map updates whenever the user's location is updated.
     LaunchedEffect(userLocation) {
+        // Check if `userLocation` is not null before proceeding.
         userLocation?.let {
+            // Update the camera's position to focus on the user's current location.
+            // The `CameraPosition.fromLatLngZoom` method sets the camera to the specified latitude and longitude
+            // (given by `it` which represents the user's location) and zooms in to a level of 15f.
             cameraPositionState.position = CameraPosition.fromLatLngZoom(it, 15f)
         }
     }
@@ -137,7 +146,9 @@ fun MapScreen(
         ) {
             // Add markers for each chore
             chores.forEach { chore ->
-                chore.location?.let { MarkerState(position = it) }?.let {
+                chore.location?.let {
+                    MarkerState(position = it)
+                }?.let {
                     Marker(
                         state = it,
                         title = chore.name,
