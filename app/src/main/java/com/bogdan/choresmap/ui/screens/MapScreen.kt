@@ -48,6 +48,7 @@ fun MapScreen(
 
     val choreMarkers by remember { mutableStateOf(mutableListOf<MarkerState>()) }
 
+    // Update camera position when user location changes
     LaunchedEffect(userLocation) {
         userLocation?.let {
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(it, 15f)
@@ -55,6 +56,7 @@ fun MapScreen(
         }
     }
 
+    // Prepare markers in a background thread
     LaunchedEffect(chores) {
         withContext(Dispatchers.Default) {
             val markers = chores.mapNotNull { chore ->
@@ -97,13 +99,13 @@ fun MapScreen(
         IconButton(
             onClick = { navController.navigate("home") },
             modifier = Modifier
-                .align(Alignment.BottomCenter) // Align to the bottom center
-                .padding(16.dp) // Add some padding from the screen edges
+                .align(Alignment.BottomCenter)
+                .padding(16.dp)
         ) {
             Icon(
                 imageVector = Icons.Filled.Home,
                 contentDescription = "Go to Home",
-                modifier = Modifier.size(48.dp) // Set size for the icon
+                modifier = Modifier.size(48.dp)
             )
         }
     }

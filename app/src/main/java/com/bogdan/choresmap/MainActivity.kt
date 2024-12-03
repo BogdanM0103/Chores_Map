@@ -12,7 +12,8 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
@@ -25,9 +26,9 @@ import com.bogdan.choresmap.ui.theme.ChoresMapTheme
 import com.google.android.libraries.places.api.Places
 import androidx.activity.compose.rememberLauncherForActivityResult
 
-
 class MainActivity : ComponentActivity() {
 
+    // Initializing LocationViewModel for managing user location
     private val locationViewModel: LocationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,18 +50,18 @@ class MainActivity : ComponentActivity() {
 fun ChoresMapApp(locationViewModel: LocationViewModel) {
     val context = LocalContext.current
 
-    // Permission launcher for runtime permissions
+    // Permission launcher for requesting FINE_LOCATION at runtime
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
-            locationViewModel.fetchLocation(context)
+            locationViewModel.startLocationUpdates()
         } else {
             Toast.makeText(context, "Location permission denied.", Toast.LENGTH_SHORT).show()
         }
     }
 
-    // Check and request permissions
+    // Check if permission is granted; if not, request it
     LaunchedEffect(Unit) {
         if (ActivityCompat.checkSelfPermission(
                 context,
@@ -69,7 +70,7 @@ fun ChoresMapApp(locationViewModel: LocationViewModel) {
         ) {
             permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         } else {
-            locationViewModel.fetchLocation(context)
+            locationViewModel.startLocationUpdates()
         }
     }
 
