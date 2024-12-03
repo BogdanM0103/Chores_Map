@@ -35,10 +35,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Initialize the Places API
-        if (!Places.isInitialized()) {
-            Places.initialize(applicationContext, "AIzaSyDok9QgrTQGCJX0EyLuC3IKrhLuNQpvnKc")
-        }
+//        // Initialize the Places API
+//        if (!Places.isInitialized()) {
+//            Places.initialize(applicationContext, "AIzaSyDok9QgrTQGCJX0EyLuC3IKrhLuNQpvnKc")
+//        }
 
         setContent {
             ChoresMapApp(locationViewModel)
@@ -58,6 +58,13 @@ fun ChoresMapApp(locationViewModel: LocationViewModel) {
             locationViewModel.startLocationUpdates()
         } else {
             Toast.makeText(context, "Location permission denied.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // Initialize Places API in a LaunchedEffect to perform side effects in a proper Composable context
+    LaunchedEffect(Unit) {
+        if (!Places.isInitialized()) {
+            Places.initialize(context.applicationContext, "AIzaSyDok9QgrTQGCJX0EyLuC3IKrhLuNQpvnKc")
         }
     }
 
