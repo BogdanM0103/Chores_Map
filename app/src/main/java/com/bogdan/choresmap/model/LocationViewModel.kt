@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.os.HandlerThread
 import android.os.Looper
 import android.util.Log
 import androidx.core.app.ActivityCompat
@@ -34,7 +35,7 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
     private val geofencingClient: GeofencingClient = LocationServices.getGeofencingClient(application.applicationContext)
 
     fun fetchLocation(context: Context) {
-        viewModelScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
             if (ActivityCompat.checkSelfPermission(
@@ -42,19 +43,33 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
+                // Use a HandlerThread to ensure a separate thread for location updates
+                val handlerThread = HandlerThread("LocationThread").apply { start() }
+                val looper = handlerThread.looper
+
                 locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
-                    1000L,
-                    1f,
+                    1000L, // Minimum time interval between location updates (ms)
+                    1f,    // Minimum distance between location updates (meters)
                     { location ->
-                        _userLocation.postValue(LatLng(location.latitude, location.longitude))
+                        // Post value to LiveData on the main thread
+                        CoroutineScope(Dispatchers.Main).launch {
+                            _userLocation.value = LatLng(location.latitude, location.longitude)
+                        }
                     },
-                    Looper.getMainLooper()
+                    looper // Use the dedicated thread's looper
                 )
+
+                // Optional: Add a stop mechanism if needed
+                // Example: Call locationManager.removeUpdates() to stop updates when the task is done
+            } else {
+                // Handle permission denial gracefully
+                CoroutineScope(Dispatchers.Main).launch {
+                    Log.e("FetchLocation", "Location permission not granted.")
+                }
             }
         }
     }
-
 
     fun addGeofence(context: Context, geofenceId: String, latLng: LatLng, radius: Float) {
         val geofence = Geofence.Builder()
