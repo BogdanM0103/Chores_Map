@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.bogdan.choresmap.model.ChoreViewModel
+import com.bogdan.choresmap.model.LocationViewModel
 import com.bogdan.choresmap.ui.screens.AddChoreScreen
 import com.bogdan.choresmap.ui.screens.HomeScreen
 import com.bogdan.choresmap.ui.screens.MapScreen
@@ -17,6 +18,7 @@ import com.bogdan.choresmap.ui.screens.MapScreen
 fun AppNavigation(
     navController: NavHostController,
     choreViewModel: ChoreViewModel,
+    locationViewModel: LocationViewModel,
     modifier: Modifier
 ) {
     NavHost(navController = navController, startDestination = "home") {
@@ -49,7 +51,7 @@ fun AppNavigation(
             AddChoreScreen(navController, choreViewModel = choreViewModel)
         }
         composable("map") {
-            MapScreen(navController, choreViewModel = choreViewModel, modifier = Modifier)
+            MapScreen(navController, choreViewModel = choreViewModel, locationViewModel = locationViewModel, modifier = Modifier)
         }
     }
 }

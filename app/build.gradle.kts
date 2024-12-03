@@ -75,4 +75,7 @@ dependencies {
 
     // Materal Icons dependency
     implementation("androidx.compose.material:material-icons-extended:1.4.3")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
+    implementation("androidx.compose.runtime:runtime-livedata:1.7.5")
 }
