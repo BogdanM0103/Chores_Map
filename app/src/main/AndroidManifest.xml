@@ -25,7 +25,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ChoresMap"
-        tools:targetApi="31">
+        tools:targetApi="34">
 
         <!--Google Maps API KEy-->
         <meta-data
@@ -37,7 +37,7 @@
             android:name=".MyNavigationService"
             android:foregroundServiceType="location"
             android:enabled="true"
-            android:exported="false">
+            android:exported="true">
             <!-- Add any required intent-filters here -->
         </service>
 

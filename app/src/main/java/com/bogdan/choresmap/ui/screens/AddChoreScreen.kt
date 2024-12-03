@@ -20,7 +20,9 @@ import com.bogdan.choresmap.ui.components.ConfirmButton
 import com.bogdan.choresmap.ui.components.fetchPlacesAutocomplete
 import com.bogdan.choresmap.ui.components.geocodePlace
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun AddChoreScreen(
@@ -82,7 +84,7 @@ fun AddChoreScreen(
             value = placeQuery,
             onValueChange = { query ->
                 placeQuery = query
-                coroutineScope.launch {
+                CoroutineScope(Dispatchers.IO).launch {
                     fetchPlacesAutocomplete(context, query) { suggestions ->
                         autocompleteSuggestions = suggestions
                     }
@@ -94,13 +96,17 @@ fun AddChoreScreen(
 
         // Autocomplete Suggestions
         autocompleteSuggestions.forEach { suggestion ->
+
             ClickableText(
                 text = AnnotatedString(suggestion),
                 onClick = {
-                    val geocodedLatLng = geocodePlace(context, suggestion)
-                    selectedPlace = geocodedLatLng
-                    placeQuery = suggestion
-                    autocompleteSuggestions = emptyList() // Clear suggestions
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val geocodedLatLng = geocodePlace(context, suggestion)
+                        selectedPlace = geocodedLatLng
+                        placeQuery = suggestion
+                        autocompleteSuggestions = emptyList() // Clear suggestions
+                    }
+
                 },
                 modifier = Modifier.padding(vertical = 4.dp)
             )

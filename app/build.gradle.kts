@@ -78,4 +78,5 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
     implementation("androidx.compose.runtime:runtime-livedata:1.7.5")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
 }
