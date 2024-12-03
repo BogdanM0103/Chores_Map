@@ -1,5 +1,6 @@
 package com.bogdan.choresmap.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Text
@@ -23,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.withContext
 
 @Composable
 fun AddChoreScreen(
@@ -102,11 +104,17 @@ fun AddChoreScreen(
                 text = AnnotatedString(suggestion),
                 // Geocoding when clicking on a suggestion
                 onClick = {
-                    coroutineScope.launch(Dispatchers.IO) {
-                        val geocodedLatLng = geocodePlace(context, suggestion)
-                        selectedPlace = geocodedLatLng
-                        placeQuery = suggestion
-                        autocompleteSuggestions = emptyList() // Clear suggestions
+                    try {
+                        coroutineScope.launch(Dispatchers.IO) {
+                            val geocodedLatLng = geocodePlace(context, suggestion)
+                            withContext(Dispatchers.Main) {
+                                selectedPlace = geocodedLatLng
+                                placeQuery = suggestion
+                                autocompleteSuggestions = emptyList() // Clear suggestions
+                            }
+                        }
+                    } catch (e: Exception) {
+                        Log.d("AutoCompleteSuggestion", "Thrown exception")
                     }
                 },
                 modifier = Modifier.padding(vertical = 4.dp)
