@@ -27,8 +27,11 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.bogdan.choresmap.ui.components.fetchLocationWithGPS
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Composable
 fun MapScreen(
@@ -43,9 +46,26 @@ fun MapScreen(
 
     val cameraPositionState = rememberCameraPositionState()
 
+    val choreMarkers by remember { mutableStateOf(mutableListOf<MarkerState>()) }
+
     LaunchedEffect(userLocation) {
         userLocation?.let {
-            cameraPositionState.position = CameraPosition.fromLatLngZoom(it, 15f)
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(it, 15f)
+            cameraPositionState.animate(cameraUpdate, 1000)
+        }
+    }
+
+    LaunchedEffect(chores) {
+        withContext(Dispatchers.Default) {
+            val markers = chores.mapNotNull { chore ->
+                chore.location?.let { location ->
+                    MarkerState(position = location)
+                }
+            }
+            withContext(Dispatchers.Main) {
+                choreMarkers.clear()
+                choreMarkers.addAll(markers)
+            }
         }
     }
 
@@ -65,16 +85,12 @@ fun MapScreen(
             )
         ) {
             // Add markers for each chore
-            chores.forEach { chore ->
-                chore.location?.let {
-                    MarkerState(position = it)
-                }?.let {
-                    Marker(
-                        state = it,
-                        title = chore.name,
-                        snippet = chore.description
-                    )
-                }
+            choreMarkers.forEach { markerState ->
+                Marker(
+                    state = markerState,
+                    title = "Chore",
+                    snippet = "Chore description" // Adjust with actual chore details if needed
+                )
             }
         }
         // Home Icon Button overlaid at the bottom center
