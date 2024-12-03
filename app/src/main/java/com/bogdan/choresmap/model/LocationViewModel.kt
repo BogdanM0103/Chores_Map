@@ -2,31 +2,50 @@ package com.bogdan.choresmap.model
 
 import android.Manifest
 import android.app.Application
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LocationViewModel(application: Application) : AndroidViewModel(application) {
 
     private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
+    private val geofencingClient = LocationServices.getGeofencingClient(application)
     private val _userLocation = MutableLiveData<LatLng>()
     val userLocation: LiveData<LatLng> = _userLocation
 
     private val locationRequest = LocationRequest.Builder(
-        Priority.PRIORITY_HIGH_ACCURACY, // Request high accuracy (uses GPS)
-        10000 // Interval for location updates in milliseconds
+        Priority.PRIORITY_HIGH_ACCURACY,
+        10000
     ).build()
+
+    private var lastLocation: Location? = null
 
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
             for (location in locationResult.locations) {
-                _userLocation.postValue(LatLng(location.latitude, location.longitude))
+                if (lastLocation == null || location.distanceTo(lastLocation!!) > 10) {
+                    lastLocation = location
+                    viewModelScope.launch(Dispatchers.Default) {
+                        val latLng = LatLng(location.latitude, location.longitude)
+                        withContext(Dispatchers.Main) {
+                            _userLocation.postValue(latLng)
+                        }
+                    }
+                }
             }
         }
     }
@@ -42,6 +61,42 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
+        }
+    }
+
+    fun addGeofence(context: Context, id: String, latLng: LatLng, radius: Float = 300f) {
+        val geofence = Geofence.Builder()
+            .setRequestId(id)
+            .setCircularRegion(latLng.latitude, latLng.longitude, radius)
+            .setExpirationDuration(Geofence.NEVER_EXPIRE)
+            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
+            .build()
+
+        val geofencingRequest = GeofencingRequest.Builder()
+            .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+            .addGeofence(geofence)
+            .build()
+
+        val intent = Intent(context, GeofenceBroadcastReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            id.hashCode(),
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            geofencingClient.addGeofences(geofencingRequest, pendingIntent)
+                .addOnSuccessListener {
+                    Log.d("Geofencing", "Geofence added successfully!")
+                }
+                .addOnFailureListener {
+                    Log.d("Geofencing", "Geofence was not added!")
+                }
         }
     }
 

@@ -9,17 +9,24 @@ import com.google.android.gms.location.GeofencingEvent
 
 class GeofenceBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        GeofencingEvent.fromIntent(intent)?.let { geofencingEvent ->
+        val geofencingEvent = GeofencingEvent.fromIntent(intent)
+
+        if (geofencingEvent != null) {
             if (geofencingEvent.hasError()) {
-                Log.e("GeofenceReceiver", "Error code: ${geofencingEvent.errorCode}")
+                Log.e("GeofenceBroadcastReceiver", "Geofence error: ${geofencingEvent.errorCode}")
                 return
             }
+        }
 
-            val transition = geofencingEvent.geofenceTransition
-            if (transition == Geofence.GEOFENCE_TRANSITION_ENTER || transition == Geofence.GEOFENCE_TRANSITION_EXIT) {
-                geofencingEvent.triggeringGeofences?.forEach { geofence ->
-                    Log.d("GeofenceReceiver", "Geofence triggered: ${geofence.requestId}")
-                    // Trigger notification or handle geofence transition
+        val geofenceTransition = geofencingEvent?.geofenceTransition
+        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER ||
+            geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
+            // Handle geofence transition
+            val triggeringGeofences = geofencingEvent?.triggeringGeofences
+            if (triggeringGeofences != null) {
+                for (geofence in triggeringGeofences) {
+                    Log.i("GeofenceBroadcastReceiver", "Geofence triggered: ${geofence.requestId}")
+                    // You can add notification logic here
                 }
             }
         }

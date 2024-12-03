@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,7 +31,7 @@ fun HomeScreen(
     onMapClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val chores = choreViewModel.chores.collectAsState().value
+    val chores = choreViewModel.chores.observeAsState().value
 
     Box(
         modifier = Modifier
@@ -41,13 +42,15 @@ fun HomeScreen(
             ) // Optional padding for screen edges
     ) {
         // Calling the List of Chores
-        ChoreList(
-            chores = chores,
-            onDeleteChore = { chore -> choreViewModel.removeChore(chore) },
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = 120.dp) // Reserve space for buttons
-        )
+        if (chores != null) {
+            ChoreList(
+                chores = chores,
+                onDeleteChore = { chore -> choreViewModel.removeChore(chore) },
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 120.dp) // Reserve space for buttons
+            )
+        }
 
         // This Box contains the AddChoreButton and the MapButton pinned at the bottom of the screen
         Box(

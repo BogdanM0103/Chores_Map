@@ -17,6 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.bogdan.choresmap.model.Chore
 import com.bogdan.choresmap.model.ChoreViewModel
+import com.bogdan.choresmap.model.LocationViewModel
 import com.bogdan.choresmap.ui.components.ConfirmButton
 import com.bogdan.choresmap.ui.components.fetchPlacesAutocomplete
 import com.bogdan.choresmap.ui.components.geocodePlace
@@ -30,6 +31,7 @@ import kotlinx.coroutines.withContext
 fun AddChoreScreen(
     navController: NavHostController,
     choreViewModel: ChoreViewModel,
+    locationViewModel: LocationViewModel,
     modifier: Modifier = Modifier
 ) {
 
@@ -158,7 +160,9 @@ fun AddChoreScreen(
                             name = choreName,
                             description = choreDescription,
                             location = selectedPlace!! // Store as string or geocode as LatLng, ensure location is not null
-                        )
+                        ),
+                        locationViewModel = locationViewModel,
+                        context = context
                     )
                     // Navigating to HomeScreen
                     navController.navigate("home")
@@ -169,12 +173,12 @@ fun AddChoreScreen(
     }
 }
 
-@Preview
-@Composable
-fun AddChoreScreenPreview() {
-    AddChoreScreen(
-        navController = rememberNavController(),
-        choreViewModel = ChoreViewModel(),
-        modifier = Modifier
-    )
-}
+//@Preview
+//@Composable
+//fun AddChoreScreenPreview() {
+//    AddChoreScreen(
+//        navController = rememberNavController(),
+//        choreViewModel = ChoreViewModel(),
+//        modifier = Modifier
+//    )
+//}

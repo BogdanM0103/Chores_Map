@@ -59,7 +59,8 @@ fun AppNavigation(
         composable("addChore") {
             AddChoreScreen(
                 navController = navController,
-                choreViewModel = choreViewModel
+                choreViewModel = choreViewModel,
+                locationViewModel = locationViewModel
             )
         }
 

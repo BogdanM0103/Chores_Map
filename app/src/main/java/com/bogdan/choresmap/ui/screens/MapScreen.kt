@@ -41,7 +41,7 @@ fun MapScreen(
 ) {
     val context = LocalContext.current
     val userLocation by locationViewModel.userLocation.observeAsState()
-    val chores by choreViewModel.chores.collectAsState()
+    val chores by choreViewModel.chores.observeAsState()
 
     val cameraPositionState = rememberCameraPositionState()
 
@@ -58,14 +58,16 @@ fun MapScreen(
     // Prepare markers in a background thread
     LaunchedEffect(chores) {
         withContext(Dispatchers.Default) {
-            val markers = chores.mapNotNull { chore ->
+            val markers = chores?.mapNotNull { chore ->
                 chore.location?.let { location ->
                     MarkerState(position = location)
                 }
             }
             withContext(Dispatchers.Main) {
                 choreMarkers.clear()
-                choreMarkers.addAll(markers)
+                if (markers != null) {
+                    choreMarkers.addAll(markers)
+                }
             }
         }
     }
