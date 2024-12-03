@@ -11,6 +11,9 @@ import com.bogdan.choresmap.ui.screens.AddChoreScreen
 import com.bogdan.choresmap.ui.screens.HomeScreen
 import com.bogdan.choresmap.ui.screens.MapScreen
 
+import androidx.compose.runtime.*
+import kotlinx.coroutines.delay
+
 /*
 * This function handles everything Navigation related and is called in the MainActivity.
 * */
@@ -21,37 +24,52 @@ fun AppNavigation(
     locationViewModel: LocationViewModel,
     modifier: Modifier
 ) {
+    // State to manage whether navigation is currently allowed
+    var isNavigating by remember { mutableStateOf(false) }
+
     NavHost(navController = navController, startDestination = "home") {
 
-        /*
-        * The lambda passed to the NavHost ultimately calls NavController.createGraph() and returns a NavGraph.
-        * Each route is supplied as a type argument to NavGraphBuilder.composable<T>() which adds the destination to the resulting NavGraph.
-        * */
+        composable("home") {
+            HomeScreen(
+                navController = navController,
+                choreViewModel = choreViewModel,
+                onAddChoreClick = {
+                    if (!isNavigating) {
+                        isNavigating = true
+                        navController.navigate("addChore")
+                    }
+                },
+                onMapClick = {
+                    if (!isNavigating) {
+                        isNavigating = true
+                        navController.navigate("map")
+                    }
+                }
+            )
 
-        /*
-        * To better understand the lambda that creates the NavGraph, consider that to build the same graph as in the preceding snippet,
-        * you could create the NavGraph separately using
-        * NavController.createGraph() and pass it to the NavHost directly:
-        val navGraph by remember(navController) {
-            navController.createGraph(startDestination = Profile)) {
-                composable<Profile> { ProfileScreen( /* ... */ ) }
-                composable<FriendsList> { FriendsListScreen( /* ... */ ) }
+            // Reset the `isNavigating` flag after a small delay to prevent rapid navigation
+            LaunchedEffect(isNavigating) {
+                if (isNavigating) {
+                    delay(300) // Adjust the delay duration as per your needs
+                    isNavigating = false
+                }
             }
         }
-        NavHost(navController, navGraph)
-         */
 
-        composable("home") {
-            /*
-            * The lambda passed to composable is what the NavHost displays for that destination.
-            * */
-            HomeScreen(navController, choreViewModel = choreViewModel)
-        }
         composable("addChore") {
-            AddChoreScreen(navController, choreViewModel = choreViewModel)
+            AddChoreScreen(
+                navController = navController,
+                choreViewModel = choreViewModel
+            )
         }
+
         composable("map") {
-            MapScreen(navController, choreViewModel = choreViewModel, locationViewModel = locationViewModel, modifier = Modifier)
+            MapScreen(
+                navController = navController,
+                choreViewModel = choreViewModel,
+                locationViewModel = locationViewModel,
+                modifier = Modifier
+            )
         }
     }
 }

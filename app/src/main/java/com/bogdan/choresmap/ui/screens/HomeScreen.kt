@@ -26,6 +26,8 @@ import com.bogdan.choresmap.ui.components.MapButton
 fun HomeScreen(
     navController: NavHostController,
     choreViewModel: ChoreViewModel,
+    onAddChoreClick: () -> Unit,
+    onMapClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val chores = choreViewModel.chores.collectAsState().value
@@ -60,7 +62,10 @@ fun HomeScreen(
             ) {
                 // AddChoreButton is called
                 AddChoreButton(
-                    onClick = { navController.navigate("addChore") },
+                    onClick = {
+//                        navController.navigate("addChore")
+                        onAddChoreClick()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp)
@@ -69,7 +74,10 @@ fun HomeScreen(
 
                 // Map Button is called
                 MapButton(
-                    onClick = { navController.navigate("map") },
+                    onClick = {
+//                        navController.navigate("map")
+                        onMapClick()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp)
@@ -80,8 +88,8 @@ fun HomeScreen(
     }
 }
 
-@Preview
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen(navController = rememberNavController(), choreViewModel = ChoreViewModel())
-}
+//@Preview
+//@Composable
+//fun HomeScreenPreview() {
+//    HomeScreen(navController = rememberNavController(), choreViewModel = ChoreViewModel())
+//}
