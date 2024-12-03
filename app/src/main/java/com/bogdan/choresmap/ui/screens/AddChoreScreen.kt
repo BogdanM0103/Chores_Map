@@ -82,9 +82,10 @@ fun AddChoreScreen(
         // Places API Autocomplete Input
         TextField(
             value = placeQuery,
+            // Fetching place suggestions on user input
             onValueChange = { query ->
                 placeQuery = query
-                CoroutineScope(Dispatchers.IO).launch {
+                coroutineScope.launch(Dispatchers.IO) {
                     fetchPlacesAutocomplete(context, query) { suggestions ->
                         autocompleteSuggestions = suggestions
                     }
@@ -99,14 +100,14 @@ fun AddChoreScreen(
 
             ClickableText(
                 text = AnnotatedString(suggestion),
+                // Geocoding when clicking on a suggestion
                 onClick = {
-                    CoroutineScope(Dispatchers.IO).launch {
+                    coroutineScope.launch(Dispatchers.IO) {
                         val geocodedLatLng = geocodePlace(context, suggestion)
                         selectedPlace = geocodedLatLng
                         placeQuery = suggestion
                         autocompleteSuggestions = emptyList() // Clear suggestions
                     }
-
                 },
                 modifier = Modifier.padding(vertical = 4.dp)
             )
