@@ -85,18 +85,33 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        if (ActivityCompat.checkSelfPermission(
+        val fineLocationGranted = ActivityCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+
+        val backgroundLocationGranted = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            ActivityCompat.checkSelfPermission(
                 context,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
-        ) {
+        } else {
+            true
+        }
+
+        Log.d("Geofencing", "Fine Location Granted: $fineLocationGranted")
+        Log.d("Geofencing", "Background Location Granted: $backgroundLocationGranted")
+
+        if (fineLocationGranted && backgroundLocationGranted) {
             geofencingClient.addGeofences(geofencingRequest, pendingIntent)
                 .addOnSuccessListener {
                     Log.d("Geofencing", "Geofence added successfully!")
                 }
                 .addOnFailureListener {
-                    Log.d("Geofencing", "Geofence was not added!")
+                    Log.d("Geofencing", "Geofence was not added! ${it.message}")
                 }
+        } else {
+            Log.d("Geofencing", "Required location permissions not granted")
         }
     }
 

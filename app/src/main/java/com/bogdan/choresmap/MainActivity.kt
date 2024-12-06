@@ -25,6 +25,7 @@ import com.bogdan.choresmap.ui.components.AppNavigation
 import com.bogdan.choresmap.ui.theme.ChoresMapTheme
 import com.google.android.libraries.places.api.Places
 import androidx.activity.compose.rememberLauncherForActivityResult
+import com.bogdan.choresmap.model.RequestPermissions
 
 class MainActivity : ComponentActivity() {
 
@@ -49,17 +50,19 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ChoresMapApp(locationViewModel: LocationViewModel) {
     val context = LocalContext.current
+//
+//    // Permission launcher for requesting FINE_LOCATION at runtime
+//    val permissionLauncher = rememberLauncherForActivityResult(
+//        contract = ActivityResultContracts.RequestPermission()
+//    ) { isGranted ->
+//        if (isGranted) {
+//            locationViewModel.startLocationUpdates()
+//        } else {
+//            Toast.makeText(context, "Location permission denied.", Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
-    // Permission launcher for requesting FINE_LOCATION at runtime
-    val permissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            locationViewModel.startLocationUpdates()
-        } else {
-            Toast.makeText(context, "Location permission denied.", Toast.LENGTH_SHORT).show()
-        }
-    }
+    RequestPermissions()
 
     // Initialize Places API in a LaunchedEffect to perform side effects in a proper Composable context
     LaunchedEffect(Unit) {
@@ -68,18 +71,18 @@ fun ChoresMapApp(locationViewModel: LocationViewModel) {
         }
     }
 
-    // Check if permission is granted; if not, request it
-    LaunchedEffect(Unit) {
-        if (ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-        } else {
-            locationViewModel.startLocationUpdates()
-        }
-    }
+//    // Check if permission is granted; if not, request it
+//    LaunchedEffect(Unit) {
+//        if (ActivityCompat.checkSelfPermission(
+//                context,
+//                Manifest.permission.ACCESS_FINE_LOCATION
+//            ) != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+//        } else {
+//            locationViewModel.startLocationUpdates()
+//        }
+//    }
 
     ChoresMapTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
