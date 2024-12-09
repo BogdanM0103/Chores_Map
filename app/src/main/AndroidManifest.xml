@@ -32,14 +32,16 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDok9QgrTQGCJX0EyLuC3IKrhLuNQpvnKc" />
 
-        <!-- Your foreground service -->
-        <service
-            android:name=".MyNavigationService"
-            android:foregroundServiceType="location"
-            android:enabled="true"
-            android:exported="true">
-            <!-- Add any required intent-filters here -->
-        </service>
+<!--        &lt;!&ndash; Your foreground service &ndash;&gt;-->
+<!--        <service-->
+<!--            android:name=".MyNavigationService"-->
+<!--            android:foregroundServiceType="location"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true">-->
+<!--            &lt;!&ndash; Add any required intent-filters here &ndash;&gt;-->
+<!--        </service>-->
+
+        <receiver android:name="com.bogdan.choresmap.model.GeofenceBroadcastReceiver"/>
 
         <activity
             android:name=".MainActivity"
