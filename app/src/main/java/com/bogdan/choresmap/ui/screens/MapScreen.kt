@@ -2,8 +2,6 @@ package com.bogdan.choresmap.ui.screens
 
 import android.Manifest
 import android.content.pm.PackageManager
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,8 +20,6 @@ import androidx.core.app.ActivityCompat
 import androidx.navigation.NavHostController
 import com.bogdan.choresmap.model.ChoreViewModel
 import com.bogdan.choresmap.model.LocationViewModel
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.android.gms.maps.CameraUpdateFactory

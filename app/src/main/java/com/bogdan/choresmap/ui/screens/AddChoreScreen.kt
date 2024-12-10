@@ -11,10 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.bogdan.choresmap.model.Chore
 import com.bogdan.choresmap.model.ChoreViewModel
 import com.bogdan.choresmap.model.LocationViewModel
@@ -24,7 +22,6 @@ import com.bogdan.choresmap.ui.components.geocodePlace
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
 
 @Composable

@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.AndroidViewModel
@@ -28,15 +29,33 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
 
     private val locationRequest = LocationRequest.Builder(
         Priority.PRIORITY_HIGH_ACCURACY,
-        10000
-    ).build()
+        1000
+    ).setMinUpdateDistanceMeters(0f).build()
 
     private var lastLocation: Location? = null
 
-    private val locationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult) {
-            super.onLocationResult(locationResult)
-            for (location in locationResult.locations) {
+    fun ensureGPSProvider(context: Context) {
+        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            Log.d("LocationManager", "GPS is disabled. Prompting user to enable.")
+            // You can prompt the user to enable GPS here
+        }
+    }
+
+    private fun requestGPSUpdates(context: Context) {
+        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                1000L, // Minimum time interval between updates in milliseconds
+                0f // Minimum distance between updates in meters
+            ) { location ->
+                Log.d("LocationManager", "GPS Location: ${location.latitude}, ${location.longitude}")
                 if (lastLocation == null || location.distanceTo(lastLocation!!) > 10) {
                     lastLocation = location
                     viewModelScope.launch(Dispatchers.Default) {
@@ -47,11 +66,37 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
                     }
                 }
             }
+        } else {
+            Log.d("LocationManager", "Fine location permission not granted.")
+        }
+    }
+
+    private val locationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            super.onLocationResult(locationResult)
+            for (location in locationResult.locations) {
+                if (location.provider == LocationManager.GPS_PROVIDER) {
+                    Log.d("LocationCallback", "Using GPS location: ${location.latitude}, ${location.longitude}")
+                    if (lastLocation == null || location.distanceTo(lastLocation!!) > 10) {
+                        lastLocation = location
+                        viewModelScope.launch(Dispatchers.Default) {
+                            val latLng = LatLng(location.latitude, location.longitude)
+                            withContext(Dispatchers.Main) {
+                                _userLocation.postValue(latLng)
+                            }
+                        }
+                    }
+                } else {
+                    Log.d("LocationCallback", "Non-GPS location ignored")
+                }
+            }
         }
     }
 
     init {
-        startLocationUpdates()
+//        startLocationUpdates()
+        ensureGPSProvider(application)
+        requestGPSUpdates(application)
     }
 
     fun startLocationUpdates() {
