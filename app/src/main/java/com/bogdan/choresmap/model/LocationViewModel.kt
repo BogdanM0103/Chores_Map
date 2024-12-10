@@ -22,10 +22,17 @@ import kotlinx.coroutines.withContext
 
 class LocationViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
+//    private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
+    val locationManager = application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     private val geofencingClient = LocationServices.getGeofencingClient(application)
     private val _userLocation = MutableLiveData<LatLng>()
     val userLocation: LiveData<LatLng> = _userLocation
+
+    init {
+//        startLocationUpdates()
+        ensureGPSProvider(application)
+        requestGPSUpdates(application)
+    }
 
     private val locationRequest = LocationRequest.Builder(
         Priority.PRIORITY_HIGH_ACCURACY,
@@ -43,8 +50,6 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun requestGPSUpdates(context: Context) {
-        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
         if (ActivityCompat.checkSelfPermission(
                 context,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -52,8 +57,8 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
         ) {
             locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER,
-                1000L, // Minimum time interval between updates in milliseconds
-                0f // Minimum distance between updates in meters
+                0L, // Minimum time interval between updates in milliseconds
+                1f // Minimum distance between updates in meters
             ) { location ->
                 Log.d("LocationManager", "GPS Location: ${location.latitude}, ${location.longitude}")
                 if (lastLocation == null || location.distanceTo(lastLocation!!) > 10) {
@@ -71,43 +76,37 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    private val locationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult) {
-            super.onLocationResult(locationResult)
-            for (location in locationResult.locations) {
-                if (location.provider == LocationManager.GPS_PROVIDER) {
-                    Log.d("LocationCallback", "Using GPS location: ${location.latitude}, ${location.longitude}")
-                    if (lastLocation == null || location.distanceTo(lastLocation!!) > 10) {
-                        lastLocation = location
-                        viewModelScope.launch(Dispatchers.Default) {
-                            val latLng = LatLng(location.latitude, location.longitude)
-                            withContext(Dispatchers.Main) {
-                                _userLocation.postValue(latLng)
-                            }
-                        }
-                    }
-                } else {
-                    Log.d("LocationCallback", "Non-GPS location ignored")
-                }
-            }
-        }
-    }
+//    private val locationCallback = object : LocationCallback() {
+//        override fun onLocationResult(locationResult: LocationResult) {
+//            super.onLocationResult(locationResult)
+//            for (location in locationResult.locations) {
+//                if (location.provider == LocationManager.GPS_PROVIDER) {
+//                    Log.d("LocationCallback", "Using GPS location: ${location.latitude}, ${location.longitude}")
+//                    if (lastLocation == null || location.distanceTo(lastLocation!!) > 1) {
+//                        lastLocation = location
+//                        viewModelScope.launch(Dispatchers.Default) {
+//                            val latLng = LatLng(location.latitude, location.longitude)
+//                            withContext(Dispatchers.Main) {
+//                                _userLocation.postValue(latLng)
+//                            }
+//                        }
+//                    }
+//                } else {
+//                    Log.d("LocationCallback", "Non-GPS location ignored")
+//                }
+//            }
+//        }
+//    }
 
-    init {
-//        startLocationUpdates()
-        ensureGPSProvider(application)
-        requestGPSUpdates(application)
-    }
-
-    fun startLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(
-                getApplication(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
-        }
-    }
+//    fun startLocationUpdates() {
+//        if (ActivityCompat.checkSelfPermission(
+//                getApplication(),
+//                Manifest.permission.ACCESS_FINE_LOCATION
+//            ) == PackageManager.PERMISSION_GRANTED
+//        ) {
+//            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
+//        }
+//    }
 
     fun addGeofence(context: Context, id: String, latLng: LatLng, radius: Float = 300f) {
         val geofence = Geofence.Builder()
@@ -158,10 +157,5 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
         } else {
             Log.d("Geofencing", "Required location permissions not granted")
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 }
