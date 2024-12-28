@@ -1,4 +1,4 @@
-package com.bogdan.choresmap.ui.screens
+package com.bogdan.choresmap.ui.screens.MapScreen
 
 import android.Manifest
 import android.content.pm.PackageManager

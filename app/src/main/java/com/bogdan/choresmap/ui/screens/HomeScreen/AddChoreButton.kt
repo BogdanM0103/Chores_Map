@@ -1,4 +1,4 @@
-package com.bogdan.choresmap.ui.components
+package com.bogdan.choresmap.ui.screens.HomeScreen
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
