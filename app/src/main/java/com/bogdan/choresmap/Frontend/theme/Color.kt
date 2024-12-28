@@ -1,4 +1,4 @@
-package com.bogdan.choresmap.ui.theme
+package com.bogdan.choresmap.Frontend.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,4 +1,4 @@
-package com.bogdan.choresmap.ui.components
+package com.bogdan.choresmap.Frontend.Screens.HomeScreen
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bogdan.choresmap.ui.theme.ChoresMapTheme
+import com.bogdan.choresmap.Frontend.theme.ChoresMapTheme
 
 /*
     This Button takes the user to AddChoreScreen

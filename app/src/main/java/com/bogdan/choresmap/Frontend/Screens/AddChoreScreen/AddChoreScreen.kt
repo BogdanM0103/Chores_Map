@@ -1,4 +1,4 @@
-package com.bogdan.choresmap.ui.screens
+package com.bogdan.choresmap.Frontend.Screens.AddChoreScreen
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
@@ -13,12 +13,9 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.bogdan.choresmap.model.Chore
-import com.bogdan.choresmap.model.ChoreViewModel
-import com.bogdan.choresmap.model.LocationViewModel
-import com.bogdan.choresmap.ui.components.ConfirmButton
-import com.bogdan.choresmap.ui.components.fetchPlacesAutocomplete
-import com.bogdan.choresmap.ui.components.geocodePlace
+import com.bogdan.choresmap.Frontend.Chore
+import com.bogdan.choresmap.Frontend.ViewModels.ChoreViewModel
+import com.bogdan.choresmap.Frontend.ViewModels.LocationViewModel
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

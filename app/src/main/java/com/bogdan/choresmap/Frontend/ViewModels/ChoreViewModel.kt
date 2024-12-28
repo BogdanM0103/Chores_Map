@@ -1,10 +1,11 @@
-package com.bogdan.choresmap.model
+package com.bogdan.choresmap.Frontend.ViewModels
 
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.bogdan.choresmap.Frontend.Chore
 
 class ChoreViewModel(application: Application) : AndroidViewModel(application) {
     private val _chores = MutableLiveData<List<Chore>>(emptyList())

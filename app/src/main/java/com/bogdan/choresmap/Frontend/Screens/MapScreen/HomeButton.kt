@@ -1,4 +1,4 @@
-package com.bogdan.choresmap.ui.components
+package com.bogdan.choresmap.Frontend.Screens.MapScreen
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons

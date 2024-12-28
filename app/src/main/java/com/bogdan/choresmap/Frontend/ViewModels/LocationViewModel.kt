@@ -1,4 +1,4 @@
-package com.bogdan.choresmap.model
+package com.bogdan.choresmap.Frontend.ViewModels
 
 import android.Manifest
 import android.app.Application
@@ -14,6 +14,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.bogdan.choresmap.Frontend.GeofenceBroadcastReceiver
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers

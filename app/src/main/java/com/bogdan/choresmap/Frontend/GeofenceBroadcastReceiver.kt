@@ -1,4 +1,4 @@
-package com.bogdan.choresmap.model
+package com.bogdan.choresmap.Frontend
 
 import android.content.BroadcastReceiver
 import android.content.Context

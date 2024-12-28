@@ -1,4 +1,4 @@
-package com.bogdan.choresmap
+package com.bogdan.choresmap.Frontend
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -14,12 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import com.bogdan.choresmap.model.ChoreViewModel
-import com.bogdan.choresmap.model.LocationViewModel
-import com.bogdan.choresmap.ui.components.AppNavigation
-import com.bogdan.choresmap.ui.theme.ChoresMapTheme
+import com.bogdan.choresmap.Frontend.ViewModels.ChoreViewModel
+import com.bogdan.choresmap.Frontend.ViewModels.LocationViewModel
+import com.bogdan.choresmap.Frontend.theme.ChoresMapTheme
 import com.google.android.libraries.places.api.Places
-import com.bogdan.choresmap.model.RequestPermissions
 
 class MainActivity : ComponentActivity() {
 

@@ -1,4 +1,4 @@
-package com.bogdan.choresmap.ui.components
+package com.bogdan.choresmap.Frontend.Screens.AddChoreScreen
 
 import android.content.Context
 import android.location.Geocoder

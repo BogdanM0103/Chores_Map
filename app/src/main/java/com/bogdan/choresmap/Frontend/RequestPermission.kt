@@ -1,4 +1,4 @@
-package com.bogdan.choresmap.model
+package com.bogdan.choresmap.Frontend
 
 import android.Manifest
 import android.content.pm.PackageManager

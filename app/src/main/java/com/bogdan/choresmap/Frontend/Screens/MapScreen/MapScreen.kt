@@ -1,4 +1,4 @@
-package com.bogdan.choresmap.ui.screens
+package com.bogdan.choresmap.Frontend.Screens.MapScreen
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -18,8 +18,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavHostController
-import com.bogdan.choresmap.model.ChoreViewModel
-import com.bogdan.choresmap.model.LocationViewModel
+import com.bogdan.choresmap.Frontend.ViewModels.ChoreViewModel
+import com.bogdan.choresmap.Frontend.ViewModels.LocationViewModel
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.android.gms.maps.CameraUpdateFactory

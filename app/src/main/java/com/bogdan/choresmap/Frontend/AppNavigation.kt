@@ -1,15 +1,15 @@
-package com.bogdan.choresmap.ui.components
+package com.bogdan.choresmap.Frontend
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.bogdan.choresmap.model.ChoreViewModel
-import com.bogdan.choresmap.model.LocationViewModel
-import com.bogdan.choresmap.ui.screens.AddChoreScreen
-import com.bogdan.choresmap.ui.screens.HomeScreen
-import com.bogdan.choresmap.ui.screens.MapScreen
+import com.bogdan.choresmap.Frontend.ViewModels.ChoreViewModel
+import com.bogdan.choresmap.Frontend.ViewModels.LocationViewModel
+import com.bogdan.choresmap.Frontend.Screens.AddChoreScreen.AddChoreScreen
+import com.bogdan.choresmap.Frontend.Screens.HomeScreen.HomeScreen
+import com.bogdan.choresmap.Frontend.Screens.MapScreen.MapScreen
 
 import androidx.compose.runtime.*
 import kotlinx.coroutines.delay

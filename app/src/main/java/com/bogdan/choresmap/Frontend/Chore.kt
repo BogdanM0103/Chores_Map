@@ -1,4 +1,4 @@
-package com.bogdan.choresmap.model
+package com.bogdan.choresmap.Frontend
 
 import com.google.android.gms.maps.model.LatLng
 

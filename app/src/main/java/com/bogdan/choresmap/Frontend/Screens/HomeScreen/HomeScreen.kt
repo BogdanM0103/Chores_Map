@@ -1,4 +1,4 @@
-package com.bogdan.choresmap.ui.screens
+package com.bogdan.choresmap.Frontend.Screens.HomeScreen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,10 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.bogdan.choresmap.model.ChoreViewModel
-import com.bogdan.choresmap.ui.components.AddChoreButton
-import com.bogdan.choresmap.ui.components.ChoreList
-import com.bogdan.choresmap.ui.components.MapButton
+import com.bogdan.choresmap.Frontend.ViewModels.ChoreViewModel
 
 /*
     The main screen of the application from which all the other screens can be accessed
