@@ -13,7 +13,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.bogdan.choresmap.Frontend.Chore
+import com.bogdan.choresmap.Backend.Chore
 import com.bogdan.choresmap.Frontend.ViewModels.ChoreViewModel
 import com.bogdan.choresmap.Frontend.ViewModels.LocationViewModel
 import com.google.android.gms.maps.model.LatLng

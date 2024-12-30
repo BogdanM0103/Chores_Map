@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.bogdan.choresmap.Frontend.Chore
+import com.bogdan.choresmap.Backend.Chore
 
 /*
     This is the List that contains all the Chores diven by the user.
