@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "500475583519",
+    "project_id": "chores-map-c3947",
+    "storage_bucket": "chores-map-c3947.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500475583519:android:be047e0773c0252972492a",
+        "android_client_info": {
+          "package_name": "com.bogdan.choresmap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC55MWSN_R2LACsTqtiKtqlLXklwgzWeCI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
