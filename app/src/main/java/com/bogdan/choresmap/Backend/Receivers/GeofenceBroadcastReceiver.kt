@@ -1,4 +1,4 @@
-package com.bogdan.choresmap.Frontend
+package com.bogdan.choresmap.Backend.Receivers
 
 import android.content.BroadcastReceiver
 import android.content.Context

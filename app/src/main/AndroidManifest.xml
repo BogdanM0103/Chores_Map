@@ -41,7 +41,7 @@
 <!--            &lt;!&ndash; Add any required intent-filters here &ndash;&gt;-->
 <!--        </service>-->
 
-        <receiver android:name="com.bogdan.choresmap.Frontend.GeofenceBroadcastReceiver"/>
+        <receiver android:name="com.bogdan.choresmap.Backend.Receivers.GeofenceBroadcastReceiver"/>
 
         <activity
             android:name=".Frontend.MainActivity"

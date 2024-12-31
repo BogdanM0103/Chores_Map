@@ -12,9 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.bogdan.choresmap.Frontend.Navigation.AppNavigation
+import com.bogdan.choresmap.Frontend.Utils.RequestPermissions
 import com.bogdan.choresmap.Frontend.ViewModels.ChoreViewModel
+import com.bogdan.choresmap.Frontend.ViewModels.ChoreViewModelFactory
 import com.bogdan.choresmap.Frontend.ViewModels.LocationViewModel
 import com.bogdan.choresmap.Frontend.theme.ChoresMapTheme
 import com.google.android.libraries.places.api.Places
@@ -27,6 +31,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // Correct usage: initialize context-dependent objects here
+        val choreViewModel = ViewModelProvider(
+            this,
+            ChoreViewModelFactory(application) // Use 'application' safely here
+        )[ChoreViewModel::class.java]
 
 //        // Initialize the Places API
 //        if (!Places.isInitialized()) {

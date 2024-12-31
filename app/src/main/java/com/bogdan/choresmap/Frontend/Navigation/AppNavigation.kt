@@ -1,4 +1,4 @@
-package com.bogdan.choresmap.Frontend
+package com.bogdan.choresmap.Frontend.Navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

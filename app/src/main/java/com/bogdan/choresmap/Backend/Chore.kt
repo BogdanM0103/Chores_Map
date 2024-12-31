@@ -12,8 +12,8 @@ import com.google.android.gms.maps.model.LatLng
 @Entity(tableName = "chores")
 data class Chore(
     @PrimaryKey val id: Int,
-    @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "description") val description: String,
-    @ColumnInfo(name = "location") val location: LatLng?,
-    @ColumnInfo(name = "isCompleted") val isCompleted: Boolean = false
+    val name: String,
+    val description: String,
+    val location: LatLng?,
+    val isCompleted: Boolean = false
 )
