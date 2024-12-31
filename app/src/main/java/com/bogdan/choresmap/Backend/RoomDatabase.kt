@@ -8,18 +8,18 @@ import androidx.room.TypeConverters
 
 @Database(entities = [Chore::class], version = 1)
 @TypeConverters(LatLngConverter::class)
-abstract class ChoreRoomDatabase : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun choreDao() : ChoreDao
 
     companion object {
         @Volatile
-        private var INSTANCE: ChoreRoomDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
-        fun getDatabase(context: Context): ChoreRoomDatabase {
+        fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    ChoreRoomDatabase::class.java,
+                    AppDatabase::class.java,
                     "chore_database"
                 )
                     .fallbackToDestructiveMigration()

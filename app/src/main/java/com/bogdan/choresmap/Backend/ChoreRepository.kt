@@ -10,7 +10,7 @@ class ChoreRepository(context: Context) {
 
 
     init {
-        val database = ChoreRoomDatabase.getDatabase(context)
+        val database = AppDatabase.getDatabase(context)
         choreDao = database.choreDao()
     }
 
