@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.bogdan.choresmap" />
+                  <option name="mobileSdkAppId" value="1:500475583519:android:be047e0773c0252972492a" />
+                  <option name="projectId" value="chores-map-c3947" />
+                  <option name="projectNumber" value="500475583519" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
