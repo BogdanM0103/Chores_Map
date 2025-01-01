@@ -1,5 +1,6 @@
 package com.bogdan.choresmap.Frontend.Screens.HomeScreen
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,7 +13,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.bogdan.choresmap.Backend.NetworkHelper
 import com.bogdan.choresmap.Frontend.ViewModels.ChoreViewModel
+import androidx.compose.ui.platform.LocalContext
 
 /*
     The main screen of the application from which all the other screens can be accessed
@@ -26,7 +29,8 @@ fun HomeScreen(
     modifier: Modifier = Modifier
 ) {
     val chores = choreViewModel.chores.observeAsState().value
-
+    // Obtain the current context
+    val context = LocalContext.current
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -60,8 +64,17 @@ fun HomeScreen(
                 // AddChoreButton is called
                 AddChoreButton(
                     onClick = {
-//                        navController.navigate("addChore")
-                        onAddChoreClick()
+////                        navController.navigate("addChore")
+//                        onAddChoreClick()
+                        if (NetworkHelper.isNetworkAvailable(context)) {
+                            onAddChoreClick() // Navigate to AddChoreScreen
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "Internet connection is required to add a chore.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
