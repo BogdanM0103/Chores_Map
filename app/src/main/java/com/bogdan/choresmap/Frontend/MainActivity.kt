@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.bogdan.choresmap.Frontend.Navigation.AppNavigation
+import com.bogdan.choresmap.Frontend.Notification.createNotificationChannel
 import com.bogdan.choresmap.Frontend.Utils.RequestPermissions
 import com.bogdan.choresmap.Frontend.ViewModels.ChoreViewModel
 import com.bogdan.choresmap.Frontend.ViewModels.ChoreViewModelFactory
@@ -37,6 +38,9 @@ class MainActivity : ComponentActivity() {
             this,
             ChoreViewModelFactory(application) // Use 'application' safely here
         )[ChoreViewModel::class.java]
+
+        // Call the notification channel creation function
+        createNotificationChannel(this)
 
 //        // Initialize the Places API
 //        if (!Places.isInitialized()) {
