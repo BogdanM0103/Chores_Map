@@ -77,6 +77,8 @@ fun ChoresMapApp(locationViewModel: LocationViewModel) {
         }
     }
 
+    createNotificationChannel(context)
+
 //    // Check if permission is granted; if not, request it
 //    LaunchedEffect(Unit) {
 //        if (ActivityCompat.checkSelfPermission(

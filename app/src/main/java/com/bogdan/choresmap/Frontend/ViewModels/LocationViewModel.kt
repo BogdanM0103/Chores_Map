@@ -114,7 +114,7 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
             .setRequestId(id)
             .setCircularRegion(latLng.latitude, latLng.longitude, radius)
             .setExpirationDuration(Geofence.NEVER_EXPIRE)
-            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
+            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
             .build()
 
         val geofencingRequest = GeofencingRequest.Builder()
@@ -123,12 +123,14 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
             .build()
 
         val intent = Intent(context, GeofenceBroadcastReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            id.hashCode(),
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
+        val pendingIntent: PendingIntent by lazy {
+            PendingIntent.getBroadcast(
+                context,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+        }
 
         val fineLocationGranted = ActivityCompat.checkSelfPermission(
             context,
@@ -148,13 +150,14 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
         Log.d("Geofencing", "Background Location Granted: $backgroundLocationGranted")
 
         if (fineLocationGranted && backgroundLocationGranted) {
-            geofencingClient.addGeofences(geofencingRequest, pendingIntent)
-                .addOnSuccessListener {
+            geofencingClient.addGeofences(geofencingRequest, pendingIntent).run {
+                addOnSuccessListener {
                     Log.d("Geofencing", "Geofence added successfully!")
                 }
-                .addOnFailureListener {
+                addOnFailureListener {
                     Log.d("Geofencing", "Geofence was not added! ${it.message}")
                 }
+            }
         } else {
             Log.d("Geofencing", "Required location permissions not granted")
         }
